@@ -3,5 +3,6 @@ http://support.cloud9ide.com/entries/21468947-Deploy-your-app-to-Heroku-using-th
 
 Useful Git Commands
 git add -A .
+git push
 git commit -a -m "Commit comments"
 git push heroku-target master

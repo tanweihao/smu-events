@@ -1,8 +1,8 @@
-Linking Cloud9 with Git  
+__Linking Cloud9 with Git__  
 http://support.cloud9ide.com/entries/21468947-Deploy-your-app-to-Heroku-using-the-Cloud9-console  
   
-Useful Git Commands  
+__Useful Git Commands__  
 git add -A .  
-git push  
 git commit -a -m "Commit comments"  
+git push  
 git push heroku-target master  

@@ -1,18 +1,24 @@
-var http = require('http');
-var path = require('path');
-var express = require('express');
+var path = require('path'),
+    express = require('express'),
+    url = require("url"),
+    rootDir = __dirname;
 
-var router = express();
-var server = http.createServer(router);
-router.use(express.static(path.resolve(__dirname, 'client')));
+var app = express();
+app.use(express.static(path.resolve(__dirname, 'client')));
 
 // Epxress app configurations
-router.configure(function () {
-    router.use(router.router);
-    router.use(express.static(__dirname + '/client'));
+app.configure(function () {
+    app.use(app.router);
+    app.use(express.static(__dirname + '/client'));
 });
 
-server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function(){
-  var addr = server.address();
-  console.log("Server running at", addr.address + ":" + addr.port);
-});
+var args = {
+    app: app,
+    url: url,
+    rootDir: rootDir
+};
+
+require('./routes/routes')(args);
+
+app.listen(process.env.PORT || 3000);
+console.log('Express server started on port %s', process.env.PORT);

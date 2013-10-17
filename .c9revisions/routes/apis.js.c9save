@@ -1,0 +1,2 @@
+{"ts":1382009633209,"silentsave":true,"restoring":false,"patch":[[]],"length":0}
+{"contributors":[],"silentsave":true,"ts":1382009632533,"patch":[[{"diffs":[[1,"module.exports = function(args) {\n    var fs = require(\"fs\"),\n        rootDir = args.rootDir;\n    fs.readdirSync(rootDir + \"/routes/apis\").forEach(function(file) {\n        require(rootDir + \"/routes/apis/\" + file)(args);\n    });\n};"]],"start1":0,"start2":0,"length1":0,"length2":231}]],"length":231,"saved":false}

@@ -12,6 +12,7 @@
 <script src="../../javascripts/html5shiv.js" type="text/javascript"></script><script src="../../javascripts/excanvas.js" type="text/javascript"></script><script src="../../javascripts/iefix.js" type="text/javascript"></script><link href="../../stylesheets/iefix.css" media="screen" rel="stylesheet" type="text/css" /><![endif]-->
 
   <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0">
+  <link rel='shortcut icon' href='images/favicon.ico' type='image/x-icon'/ > 
 </head>
 <body>
 
@@ -55,13 +56,13 @@
 
     <li class="active">
       <a href="#" >
-        <i class="icon-dashboard"></i> Events
+        <i class="icon-dashboard"></i> Organizer
       </a>
     </li>
 
     <li class="">
       <a href="attendance.html">
-        <i class="icon-list-alt"></i> Attendance
+        <i class="icon-user"></i> TA
       </a>
     </li>
 
@@ -104,13 +105,13 @@
   
 <li class="active">
   <a href="fullcalendar.html">
-      <i class="icon-calendar"></i> Overview
+      <i class="icon-calendar"></i> Your Events
         </a>
 </li>
 
 <li class="">
   <a href="createEvent.html">
-     <i class="icon-plus-sign"></i> Create 
+     <i class="icon-plus-sign"></i> Create an event
   </a>
 </li>
 
@@ -126,8 +127,8 @@
     <div class="row-fluid search-button-bar-container">
       <div class="span12">
         <ul class="breadcrumb">
-           <li><a href="#"><i class="icon-home"></i> Events</a></li>
-          <li class="active"><a href="#">Overview</a></li>
+           <li><a href="#"><i class="icon-home"></i> Organizer</a></li>
+          <li class="active"><a href="#">Events</a></li>
         </ul>
         <a class="search-button-trigger" href="#"><i class="icon-search"></i></a>
       </div>
@@ -136,7 +137,7 @@
     <div class="row-fluid search-bar-nav">
       <div class="span12">
         <form>
-          <input type="text" class="search" placeholder="Search...">
+          <input type="text" class="search" placeholder="Search events...">
         </form>
       </div>
     </div>
@@ -304,7 +305,7 @@
 </script>
 
 <script type="text/javascript">
-  
+  $(".search-bar-nav").toggleClass("open");
 </script>
 
 </body>

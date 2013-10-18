@@ -1,24 +1,31 @@
 var path = require('path'),
     express = require('express'),
+    app = express(),
     url = require("url"),
-    rootDir = __dirname;
+    rootDir = __dirname,
+    MongoClient = require('mongodb').MongoClient,
+    connection_string = 'mongodb://admin:livelabs@ds049878.mongolab.com:49878/smu-events';
 
-var app = express();
-app.use(express.static(path.resolve(__dirname, 'client')));
-
-// Epxress app configurations
-app.configure(function () {
-    app.use(app.router);
-    app.use(express.static(__dirname + '/client'));
+MongoClient.connect(connection_string, function (err, db) {
+    if (!err) {
+        // Epxress app configurations
+        app.configure(function () {
+            app.use(app.router);
+            app.use(express.static(__dirname + '/client'));
+        });
+        
+        var args = {
+            app: app,
+            url: url,
+            db: db,
+            rootDir: rootDir
+        };
+        
+        require('./routes/routes')(args);
+        
+        app.listen(process.env.PORT || 3000);
+        console.log('Express server started on port %s', process.env.PORT);
+    } else {
+        console.log(err);
+    }
 });
-
-var args = {
-    app: app,
-    url: url,
-    rootDir: rootDir
-};
-
-require('./routes/routes')(args);
-
-app.listen(process.env.PORT || 3000);
-console.log('Express server started on port %s', process.env.PORT);

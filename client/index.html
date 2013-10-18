@@ -79,14 +79,14 @@
         <div class="center span4 well">
             <legend>Please Sign In</legend>
             
-            <form method="POST" action="dashboard.html" accept-charset="UTF-8">
+           
             <input type="text" id="username" class="span4" name="username" placeholder="Username" />
             <input type="password" id="password" class="span4" name="password" placeholder="Password" />
             <label class="checkbox">
                 <input type="checkbox" name="remember" value="1" /> Remember Me
             </label>
             <button id="signIn"  name="submit" class="btn btn-primary btn-block" >Sign in</button>
-            </form>
+            
         </div>
     </div>
 </div>
@@ -155,7 +155,9 @@
 			});
 			
 			
-			
+			$("#signIn").on('click',function(){
+			    window.location.replace("dashboard.html");
+			});
 		</script>
 		<script src="bootstrap/js/bootstrap.min.js"></script>
 		<script src="themes/js/jquery-ui-1.10.3.custom.min.js"></script>

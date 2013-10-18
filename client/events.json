@@ -1,0 +1,35 @@
+{ _id: 1, 
+  name: "SMU-SGX Quantitative Trading Course", 
+  description: "SMU-SGX Quantitative Trading Course", 
+  dateTime: "05/10/2013",
+  venue:"SMU SIS SR-2.1",
+  imgUrl:"smu-sgx.png",
+  organizer:101
+}
+
+{ _id: 2, 
+  name: "Social Innovation eXperience 2013", 
+  description: "Social Innovation eXperience 2013", 
+  dateTime: "04/10/2013",
+  venue:"SMU SOB SR-3.3",
+  imgUrl:"sie2013.png",
+  organizer:102
+}
+
+{ _id: 3, 
+  name: "Finance Research Seminar", 
+  description: "Finance Research Seminar", 
+  dateTime: "07/10/2013",
+  venue:"SMU SOE SR-4.4",
+  imgUrl:"frs.png",
+  organizer:103
+}
+
+{ _id: 4, 
+  name: "A Foundation Ontology for Global City Indicators", 
+  description: "A Foundation Ontology for Global City Indicators", 
+  dateTime: "10/10/2013",
+  venue:"SMU SOA SR-1.1",
+  imgUrl:"foundation.png",
+  organizer:104
+}

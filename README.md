@@ -1,49 +1,43 @@
-Server APIs
------------
-<table>
-    <tr>
-        <th>Path</th>
-        <th>Type</th>
-        <th>Parameters</th>
-        <th>JSON Structure</th>
-        <th>Result Key</th>
-        <th>Result Value</th>
-        <th>Description</th>
-    </tr>
-    <tr>
-        <td>/api/event_list</td>
-        <td>GET</td>
-        <td>[page (int)]</td>
-        <td>Array of JSON objects</td>
-        <td>
-            eid<br>
-            eName<br>
-            oName<br>
-            sDate<br>
-            eDate<br>
-            venue<br>
-            description<br>
-            status<br>
-        </td>
-        <td>
-            int<br>
-            string<br>
-            string<br>
-            Date()<br>
-            Date()<br>
-            string<br>
-            string<br>
-            boolean<br>
-        </td>
-        <td>
-            <ul>
-                <li>Returns first 10 event results sorted by date from current date.</li>
-                <li>Returns next 10 events depending on <i>page</i>.</li>
-                <li>Returns error message when <i>page</i> is out of range.</li>
-            </ul>
-        </td>
-    </tr>
-</table>
+## Server APIs ##
+__GET: /api/events/event_list__  
+Parameters:
+* page: int (optional)
+
+Returns an array of JSON objects:  
+* id: int
+* event_name: string
+* org_name: string
+* start_date: Date()
+* end_date: Date()
+* venue: string
+* description: string
+* status: boolean
+
+Description:
+* Returns first 10 event results sorted by date from current date.
+* Returns next 10 events depending on *page*.
+* Returns error message when *page* is out of range.
+
+__POST: /api/events/add_event__  
+Parameters:
+* event_name: string
+* org_name: string
+* start_date: Date()
+* end_date: Date()
+* venue: string
+* description: string
+
+Returns the added event as a JSON object:  
+* id: int
+* event_name: string
+* org_name: string
+* start_date: Date()
+* end_date: Date()
+* venue: string
+* description: string
+
+Description:
+* Adds an event into the database and returns the event ID
   
 Useful Git Commands
 -------------------

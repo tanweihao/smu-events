@@ -10,8 +10,11 @@ MongoClient.connect(connection_string, function (err, db) {
     if (!err) {
         // Epxress app configurations
         app.configure(function () {
-            app.use(app.router);
             app.use(express.static(__dirname + '/client'));
+            app.use(express.bodyParser({
+                keepExtensions: true
+            }));
+            app.use(app.router);
         });
         
         var args = {

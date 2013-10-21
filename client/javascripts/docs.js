@@ -180,17 +180,17 @@
       "sPaginationType": "full_numbers",
       "sDom": '<""l>t<"F"fp>'
     });
+    var events;
+    $.ajax({
+    	url: "/api/events/event_list",
+		type: "GET",
+		contentType: "application/json",
+    	success:function(json) {
+    		events = json;
+    	}
+    });
     return $("#calendar").fullCalendar({
-      events : [
-        {
-            title: 'Event1',
-            start: '2013-10-04'
-        },
-        {
-            title: 'Event2',
-            start: '2013-10-05'
-        }
-        ],
+      events : events,
       header: {
         left: 'prev,next today',
         center: 'title',

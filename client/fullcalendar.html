@@ -149,104 +149,8 @@
 
   <div class="span5" id='external-events' style="max-height:700px;">
     <div class="nav-menu box">
-      <ul class="nav nav-list">
-        <li class="nav-header">Upcoming events</li>
-
-        
-           <li>
-           <a href="#">
-  <div class="thumbnail clearfix">
-    <img src="http://placehold.it/320x200" alt="ALT NAME" class="pull-left span5 clearfix" style="margin-right:10px">
-    <div class="caption">
-      <h4>      
-      Event 1
-      </h4>
-      <small><b>RG: </b>99384877</small>
-        
+      <ul class="nav nav-list" id="eventsList">
       
-    </div>
-  </div>
-  </a>
-</li>
-        <li><a href="#">
-  <div class="thumbnail clearfix">
-    <img src="http://placehold.it/320x200" alt="ALT NAME" class="pull-left span5 clearfix" style="margin-right:10px">
-    <div class="caption">
-      <h4>      
-      Event 2
-      </h4>
-      <small><b>RG: </b>99384877</small>
-        
-      
-    </div>
-  </div>
-</a>
-</li><li>
-<a href="#">
-  <div class="thumbnail clearfix">
-    <img src="http://placehold.it/320x200" alt="ALT NAME" class="pull-left span5 clearfix" style="margin-right:10px">
-    <div class="caption">
-      <h4>      
-      Event 3
-      </h4>
-      <small><b>RG: </b>99384877</small>
-        
-      
-    </div>
-  </div>
-  </a>
-</li>
-         <li class="nav-header">Past events</li>
-                  <li>
-                  <a href="#">
-  <div class="thumbnail clearfix">
-    <img src="http://placehold.it/320x200" alt="ALT NAME" class="pull-left span5 clearfix" style="margin-right:10px">
-    <div class="caption">
-      <h4>      
-      Event 4
-      </h4>
-      <small><b>RG: </b>99384877</small>
-        
-      
-    </div>
-  </div>
-  </a>
-</li>
-        <li>
-        <a href="#">
-  <div class="thumbnail clearfix">
-    <img src="http://placehold.it/320x200" alt="ALT NAME" class="pull-left span5 clearfix" style="margin-right:10px">
-    <div class="caption">
-      <h4>      
-      Event 5
-      </h4>
-      <small><b>RG: </b>99384877</small>
-        
-      
-    </div>
-  </div>
-  </a>
-</li>
-<li>
-<a href="#">
-  <div class="thumbnail clearfix">
-    <img src="http://placehold.it/320x200" alt="ALT NAME" class="pull-left span5 clearfix" style="margin-right:10px">
-    <div class="caption">
-      <h4>      
-      Event 6
-      </h4>
-      <small><b>RG: </b>99384877</small>
-        
-      
-    </div>
-  </div>
-</a>
-</li>
-     <!--   <li class="show-option pull-right">
-          <a id="add-event" class="flat" href="#"><i class="icon-plus"></i>Create event</a>
-        </li>
-        
--->
       </ul>
     </div>
   </div>
@@ -307,7 +211,7 @@
 <script type="text/javascript">
   $(".search-bar-nav").toggleClass("open");
   
-    var jsonEvents = [];
+  var jsonEvents = [];var eventById = {};
     $.ajax({
     	url: "/api/events/event_list",
 		type: "GET",
@@ -317,6 +221,39 @@
     		for (var i = 0; i < json.length; i++) {
         		jsonEvents.push({title: json[i].event_name, start: json[i].start_date});
     		}
+    		
+    		$("#pastEvents").empty();
+      					var sb = [];
+      					
+      					sb.push('<li class="nav-header">Upcoming events</li>');
+      					$(json).each(function(i,e){
+      						eventById[e.id] = e;
+      						var dateParts = e.start_date.split("/");
+      						var eDate = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
+      						var nowDate = new Date();
+      						if(eDate > nowDate){
+      							sb.push('<li><a href="#"><div class="thumbnail clearfix">');
+      							sb.push('<img src="http://placehold.it/320x200" alt="ALT NAME" class="pull-left span5 clearfix" style="margin-right:10px">');
+   								sb.push('<div class="caption"><h4>'+e.eventName+'</h4><small><b>ID: </b>'+e.id+'</small> </div></div></a></li>');
+      						}
+      						
+      					});
+      					
+      					sb.push('<li class="nav-header">Past events</li>');
+      					$(json).each(function(i,e){
+      						var dateParts = e.start_date.split("/");
+      						var eDate = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
+      						var nowDate = new Date();
+      						if(eDate > nowDate){
+      							sb.push('<li><a href="#"><div class="thumbnail clearfix">');
+      							sb.push('<img src="http://placehold.it/320x200" alt="ALT NAME" class="pull-left span5 clearfix" style="margin-right:10px">');
+   								sb.push('<div class="caption"><h4>'+e.eventName+'</h4><small><b>ID: </b>'+e.id+'</small> </div></div></a></li>');
+      						}
+      						
+      					
+      					});
+      					$("#eventsList").append(sb.join(''));
+    		
     	}
     });
     $("#calendar").fullCalendar({

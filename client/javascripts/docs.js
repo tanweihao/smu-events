@@ -186,7 +186,8 @@
 		type: "GET",
 		contentType: "application/json",
     	success:function(json) {
-    		events = json;
+    		events["title"] = json.event_name;
+    		events["start"] = json.start_date;
     	}
     });
     return $("#calendar").fullCalendar({

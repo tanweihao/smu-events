@@ -222,7 +222,7 @@
         		jsonEvents.push({title: json[i].event_name, start: json[i].start_date});
     		}
     		
-    		$("#pastEvents").empty();
+    		$("#eventsList").empty();
       					var sb = [];
       					
       					sb.push('<li class="nav-header">Upcoming events</li>');
@@ -234,8 +234,8 @@
       						var nowDate = new Date();
       						if(eDate > nowDate){
       							sb.push('<li><a href="#"><div class="thumbnail clearfix">');
-      							sb.push('<img src="http://placehold.it/320x200" alt="ALT NAME" class="pull-left span5 clearfix" style="margin-right:10px">');
-   								sb.push('<div class="caption"><h4>'+e.eventName+'</h4><small><b>ID: </b>'+e.id+'</small> </div></div></a></li>');
+      							sb.push('<img src="images/gallery/large/img'+e.id+'.jpg" alt="ALT NAME" class="pull-left span5 clearfix" style="margin-right:10px">');
+   								sb.push('<div class="caption"><h4>'+e.event_name+'</h4><small><b>ID: </b>'+e.id+'</small> </div></div></a></li>');
       						}
       						
       					});
@@ -248,8 +248,8 @@
       						var nowDate = new Date();
       						if(eDate < nowDate){
       							sb.push('<li><a href="#"><div class="thumbnail clearfix">');
-      							sb.push('<img src="http://placehold.it/320x200" alt="ALT NAME" class="pull-left span5 clearfix" style="margin-right:10px">');
-   								sb.push('<div class="caption"><h4>'+e.eventName+'</h4><small><b>ID: </b>'+e.id+'</small> </div></div></a></li>');
+      							sb.push('<img src="images/gallery/large/img'+e.id+'.jpg" alt="ALT NAME" class="pull-left span5 clearfix" style="margin-right:10px">');
+   								sb.push('<div class="caption"><h4>'+e.event_name+'</h4><small><b>ID: </b>'+e.id+'</small> </div></div></a></li>');
       						}
       						
       					

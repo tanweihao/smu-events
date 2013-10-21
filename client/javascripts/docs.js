@@ -180,18 +180,20 @@
       "sPaginationType": "full_numbers",
       "sDom": '<""l>t<"F"fp>'
     });
-    var events;
+    var jsonEvents = [];
     $.ajax({
     	url: "/api/events/event_list",
 		type: "GET",
 		contentType: "application/json",
     	success:function(json) {
-    		events["title"] = json.event_name;
-    		events["start"] = json.start_date;
+    		 //declare object
+    		for (var i = 0; i < json.length; i++) {
+        		jsonEvents.push({title: json[i].event_name, start: json[i].start_date});
+    		}
     	}
     });
     return $("#calendar").fullCalendar({
-      events : events,
+      events : jsonEvents,
       header: {
         left: 'prev,next today',
         center: 'title',

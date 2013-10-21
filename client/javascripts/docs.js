@@ -180,39 +180,7 @@
       "sPaginationType": "full_numbers",
       "sDom": '<""l>t<"F"fp>'
     });
-    var jsonEvents = [];
-    $.ajax({
-    	url: "/api/events/event_list",
-		type: "GET",
-		contentType: "application/json",
-    	success:function(json) {
-    		 //declare object
-    		for (var i = 0; i < json.length; i++) {
-        		jsonEvents.push({title: json[i].event_name, start: json[i].start_date});
-    		}
-    	}
-    });
-    return $("#calendar").fullCalendar({
-      events : jsonEvents,
-      header: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'month,agendaWeek,agendaDay'
-      },
-      editable: true,
-      droppable: true,
-      drop: function(date, allDay) {
-        var copiedEventObject, originalEventObject;
-        originalEventObject = $(this).data('eventObject');
-        copiedEventObject = $.extend({}, originalEventObject);
-        copiedEventObject.start = date;
-        copiedEventObject.allDay = allDay;
-        $("#calendar").fullCalendar('renderEvent', copiedEventObject, true);
-        if ($("#drop-remove").is(":checked")) {
-          return $(this).remove();
-        }
-      }
-    });
+
   });
 
 }).call(this);

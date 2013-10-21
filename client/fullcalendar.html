@@ -122,7 +122,7 @@
 
 
 <section id="main">
-  <div class="top-nav">
+  <div class="top-nav fixed">
   <div class="container-fluid">
     <div class="row-fluid search-button-bar-container">
       <div class="span12">
@@ -147,7 +147,7 @@
   <div class="container-fluid">
     <div class="row-fluid">
 
-  <div class="span5" id='external-events'>
+  <div class="span5" id='external-events' style="max-height:700px;">
     <div class="nav-menu box">
       <ul class="nav nav-list">
         <li class="nav-header">Upcoming events</li>
@@ -258,14 +258,14 @@
   </div>
 </div>
 
-
+<!--
     <div class="row-fluid">
   <div class="span12">
     <div class="footer">
-     
+     	<p> Copyright @ 2013 </p>
     </div>
   </div>
-</div>
+</div> -->
   </div>
 </section>
 
@@ -306,6 +306,15 @@
 
 <script type="text/javascript">
   $(".search-bar-nav").toggleClass("open");
+  
+  $.ajax({
+    	url: "/api/events/event_list",
+		type: "GET",
+		contentType: "application/json",
+    	success:function(json) {
+    		console.log(json);
+    	}
+    });
 </script>
 
 </body>

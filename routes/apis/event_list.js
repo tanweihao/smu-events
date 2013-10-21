@@ -7,21 +7,41 @@ module.exports = function (args) {
             eventCollection = db.collection('events');
 
         // Parameters passed in URL
-        var page = (_get.page) ? _get.page * 10 : 0;
+        var page = (_get.page) ? _get.page * 10 : 0,
+            org_id = (_get.org_id) ? parseInt(_get.org_id) : "";
         
-        eventCollection.find({
-            start_date: {
-                $gte: new Date()
-            }
-        }, {
-            limit: 10,
-            skip: page
-        }).toArray(function(err, events) {
-            if (!err) {
-                res.json(
-                    events
-                );
-            }
-        });
+        if (org_id == "") {
+            eventCollection.find({
+                start_date: {
+                    $gte: new Date()
+                }
+            }, {
+                limit: 10,
+                skip: page
+            }).toArray(function(err, events) {
+                if (!err) {
+                    res.json(
+                        events
+                    );
+                }
+            });
+        } else {
+            eventCollection.find({
+                start_date: {
+                    $gte: new Date()
+                },
+                org_id: org_id
+            }, {
+                limit: 10,
+                skip: page
+            }).toArray(function(err, events) {
+                if (!err) {
+                    res.json(
+                        events
+                    );
+                }
+            });
+        }
+        
     });
 }

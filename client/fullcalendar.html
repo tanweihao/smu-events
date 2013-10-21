@@ -228,8 +228,9 @@
       					sb.push('<li class="nav-header">Upcoming events</li>');
       					$(json).each(function(i,e){
       						eventById[e.id] = e;
-      						var dateParts = e.start_date.split("/");
-      						var eDate = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
+      						//var dateParts = e.start_date.split("/");
+      						//var eDate = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
+      						var eDate = new Date(e.start_date);
       						var nowDate = new Date();
       						if(eDate > nowDate){
       							sb.push('<li><a href="#"><div class="thumbnail clearfix">');
@@ -241,10 +242,11 @@
       					
       					sb.push('<li class="nav-header">Past events</li>');
       					$(json).each(function(i,e){
-      						var dateParts = e.start_date.split("/");
-      						var eDate = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
+      						//var dateParts = e.start_date.split("/");
+      						//var eDate = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
+      						var eDate = new Date(e.start_date);
       						var nowDate = new Date();
-      						if(eDate > nowDate){
+      						if(eDate < nowDate){
       							sb.push('<li><a href="#"><div class="thumbnail clearfix">');
       							sb.push('<img src="http://placehold.it/320x200" alt="ALT NAME" class="pull-left span5 clearfix" style="margin-right:10px">');
    								sb.push('<div class="caption"><h4>'+e.eventName+'</h4><small><b>ID: </b>'+e.id+'</small> </div></div></a></li>');

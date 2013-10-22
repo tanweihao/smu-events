@@ -34530,7 +34530,10 @@ plots, you can just fix the size of their placeholders.
                         autoDismiss: 3,
                         "class": "success"
                     });
-                    action = "login";
+                    $("#register").hide();
+                    $("#login-link").hide();
+      				$("#login").show();
+      				$("#register-link").show();
     	        }
             });
         }

@@ -34449,7 +34449,7 @@ plots, you can just fix the size of their placeholders.
       this.loginSubmit.click(function(e) {
       	var username = $('input[name="username"]').val();
         var password = $('input[name="password"]').val();
-         var loginData = '{"username":"'+username+'","password":"'+password+'"}';
+        var loginData = '{"username":"'+username+'","password":"'+password+'"}';
         console.log(loginData);
         $.ajax({
     	    url: "http://smu-events.herokuapp.com/api/login",

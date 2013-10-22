@@ -217,10 +217,11 @@
           $('.title').text(checkCookie.split('=')[0]);
       }
   var jsonEvents = [];var eventById = {};
+  var orgId = '{"org_id":"'+checkCookie.split('=')[1]+'"}';
     $.ajax({
     	url: "/api/events/event_list",
 		type: "GET",
-		data:checkCookie.split('=')[1],
+		data:orgId,
 		contentType: "application/json",
     	success:function(json) {
     	    

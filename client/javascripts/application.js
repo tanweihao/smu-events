@@ -34453,13 +34453,20 @@ plots, you can just fix the size of their placeholders.
         loginData["username"] = username;  loginData["password"] = password;
         console.log(loginData);
         $.ajax({
-    	url: "/api/users/add_user",
-		type: "GET",
-		contentType: "application/json",
-		data: loginData,
-    	success:function(json) {
-    	    console.log(json);
-    	}
+    	    url: "/api/users/add_user",
+		    type: "POST",
+    		contentType: "application/json",
+		    data: loginData,
+		    error:function(){
+		            Notifications.push({
+                        text: "<i class='icon-warning-sign'></i> [Test] Cannot Add User.",
+                        autoDismiss: 3,
+                        "class": "error"
+                    });
+		    },
+    	    success:function(json) {
+    	        console.log(json);
+    	    }
         });
         /*var wrapper;
         if ($(this).closest("form").find("#email").val().length === 0) {

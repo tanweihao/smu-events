@@ -34629,7 +34629,7 @@ plots, you can just fix the size of their placeholders.
 
 
 function createCookie(name,value,hrs) {
-	if (days) {
+	if (hrs) {
 		var date = new Date();
 		date.setTime(date.getTime()+(hrs*60*60*1000));
 		var expires = "; expires="+date.toGMTString();

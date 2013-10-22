@@ -34449,12 +34449,10 @@ plots, you can just fix the size of their placeholders.
       this.loginSubmit.click(function(e) {
       	var username = $('input[name="username"]').val();
         var password = $('input[name="password"]').val();
-        //var loginData = {};
-        //loginData["username"] = username;  loginData["password"] = password;
          var loginData = '{"username":"'+username+'","password":"'+password+'"}';
         console.log(loginData);
         $.ajax({
-    	    url: "/api/users/add_user",
+    	    url: "/api/login",
 		    type: "POST",
     		contentType: "application/json",
 		    data: loginData,
@@ -34467,8 +34465,68 @@ plots, you can just fix the size of their placeholders.
 		    },
     	    success:function(json) {
     	        console.log(json);
+    	        Notifications.push({
+                    text: "<i class='icon-success-sign'></i> [Test] Added User!",
+                    autoDismiss: 3,
+                    "class": "success"
+                });
+                var expireDate = new Date().addHours(4);
+                document.cookie = 'userId='+json+';expires='+expireDate+'";
     	    }
         });
+        /*var wrapper;
+        if ($(this).closest("form").find("#email").val().length === 0) {
+          e.preventDefault();
+          wrapper = $(this).closest(".login-wrapper");
+          wrapper.addClass("wobble");
+          Notifications.push({
+            text: "<i class='icon-warning-sign'></i> invalid username or password",
+            autoDismiss: 3,
+            "class": "error"
+          });
+          return wrapper.bind("webkitAnimationEnd animationEnd mozAnimationEnd", function() {
+            wrapper.off("webkitAnimationEnd");
+            return wrapper.removeClass("wobble");
+          });
+        }*/
+      });register-submit
+      this.registerSubmit = this.container.find("#register-submit");
+      this.registerSubmit.click(function(e) {
+      	var username = $('input[name="username"]').val();
+        var password = $('input[name="password"]').val();
+        var confirmPassword = $('input[name="confirmPassword"]').val();
+        if(password !== confirmPassword){
+            Notifications.push({
+                text: "<i class='icon-warning-sign'></i> Error: Passwords don't match. Please try again.",
+                autoDismiss: 3,
+                "class": "error"
+            });
+        }else{
+            var registerData = '{"username":"'+username+'","password":"'+password+'"}';
+            console.log(registerData);
+            $.ajax({
+    	        url: "/api/users/add_user",
+		        type: "POST",
+    		    contentType: "application/json",
+		        data: registerData,
+		        error:function(){
+		            Notifications.push({
+                        text: "<i class='icon-warning-sign'></i> Error: Cannot Add User.",
+                        autoDismiss: 3,
+                        "class": "error"
+                    });
+		        },
+    	        success:function(json) {
+    	            console.log(json);
+    	            Notifications.push({
+                        text: "<i class='icon-success-sign'></i> Successfully Registered! Please log in to continue.",
+                        autoDismiss: 3,
+                        "class": "success"
+                    });
+                    this.showLoginForm();
+    	        }
+            });
+        }
         /*var wrapper;
         if ($(this).closest("form").find("#email").val().length === 0) {
           e.preventDefault();

@@ -34449,8 +34449,9 @@ plots, you can just fix the size of their placeholders.
       this.loginSubmit.click(function(e) {
       	var username = $('input[name="username"]').val();
         var password = $('input[name="password"]').val();
-        var loginData = {};
-        loginData["username"] = username;  loginData["password"] = password;
+        //var loginData = {};
+        //loginData["username"] = username;  loginData["password"] = password;
+         var loginData = '{"username":"'+username+'","password":"'+password+'"}';
         console.log(loginData);
         $.ajax({
     	    url: "/api/users/add_user",

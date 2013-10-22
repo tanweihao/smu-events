@@ -34454,7 +34454,7 @@ plots, you can just fix the size of their placeholders.
         console.log(loginData);
         $.ajax({
     	url: "/api/users/add_user",
-		type: "POST",
+		type: "GET",
 		contentType: "application/json",
 		data: loginData,
     	success:function(json) {

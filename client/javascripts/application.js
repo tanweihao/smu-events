@@ -34447,7 +34447,21 @@ plots, you can just fix the size of their placeholders.
       this.registerLink.bind("click", this.showRegisterForm);
       this.loginSubmit = this.container.find("#login-submit");
       this.loginSubmit.click(function(e) {
-        var wrapper;
+      	var username = $('input[name="username"]').val();
+        var password = $('input[name="password"]').val();
+        var loginData = {};
+        loginData["username"] = username;  loginData["password"] = password;
+        console.log(loginData);
+        $.ajax({
+    	url: "http://smu-events.herokuapp.com/api/users/add_user",
+		type: "GET",
+		contentType: "application/json",
+		data: loginData,
+    	success:function(json) {
+    	    console.log(json);
+    	}
+        });
+        /*var wrapper;
         if ($(this).closest("form").find("#email").val().length === 0) {
           e.preventDefault();
           wrapper = $(this).closest(".login-wrapper");
@@ -34461,7 +34475,7 @@ plots, you can just fix the size of their placeholders.
             wrapper.off("webkitAnimationEnd");
             return wrapper.removeClass("wobble");
           });
-        }
+        }*/
       });
       action = this.getParameterByName("action");
       if (action === 'register') {

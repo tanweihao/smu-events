@@ -217,11 +217,11 @@
           $('.title').text(readCookie("username"));
       }
   var jsonEvents = [];var eventById = {};
-  //var orgId = '{"org_id":"'+checkCookie.split('=')[1]+'"}';
+  var orgId = '{"org_id":"'+readCookie("orgId")+'"}';
     $.ajax({
     	url: "/api/events/event_list",
 		type: "GET",
-		data:readCookie("orgId"),
+		data:orgId,
 		contentType: "application/json",
     	success:function(json) {
     	    

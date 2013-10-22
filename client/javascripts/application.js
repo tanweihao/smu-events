@@ -34497,9 +34497,9 @@ plots, you can just fix the size of their placeholders.
       });
       this.registerSubmit = this.container.find("#register-submit");
       this.registerSubmit.click(function(e) {
-      	var username = $('input[name="username"]').val();
-        var password = $('input[name="password"]').val();
-        var confirmPassword = $('input[name="confirmPassword"]').val();
+      	var username = $('input[name="register-username"]').val();
+        var password = $('input[name="register-password"]').val();
+        var confirmPassword = $('input[name="register-confirmPassword"]').val();
         console.log(password);
         console.log(confirmPassword);
         if(password !== confirmPassword){

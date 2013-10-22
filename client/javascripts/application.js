@@ -34530,7 +34530,7 @@ plots, you can just fix the size of their placeholders.
                         autoDismiss: 3,
                         "class": "success"
                     });
-                    this.showLoginForm();
+                    action = "login";
     	        }
             });
         }

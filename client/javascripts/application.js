@@ -34453,8 +34453,8 @@ plots, you can just fix the size of their placeholders.
         loginData["username"] = username;  loginData["password"] = password;
         console.log(loginData);
         $.ajax({
-    	url: "http://smu-events.herokuapp.com/api/users/add_user",
-		type: "GET",
+    	url: "/api/users/add_user",
+		type: "POST",
 		contentType: "application/json",
 		data: loginData,
     	success:function(json) {

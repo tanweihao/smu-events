@@ -349,7 +349,7 @@
       if(checkCookie==undefined ||checkCookie=="" || checkCookie==null ){
             window.location.replace('index.html');
       }else{
-          $('.title').text(checkCookie.split('='));
+          $('.title').text(checkCookie.split('=')[0]);
       }
 </script>
 

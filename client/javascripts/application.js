@@ -34475,7 +34475,7 @@ plots, you can just fix the size of their placeholders.
     				return this;
 				}
                 var expireDate = new Date().addHours(4);
-                document.cookie = 'username='+username+';userId='+json+';expires='+expireDate;
+                document.cookie = username+'='+json+';expires='+expireDate;
                 window.location.replace("fullcalendar.html");
     	    }
         });

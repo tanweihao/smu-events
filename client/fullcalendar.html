@@ -210,19 +210,30 @@
 
 <script type="text/javascript">
   $(".search-bar-nav").toggleClass("open");
-  
+  var checkCookie = document.cookie;
+      if(checkCookie==undefined ||checkCookie=="" || checkCookie==null ){
+            window.location.replace('index.html');
+      }else{
+          $('.title').text(checkCookie.split('=')[0]);
+      }
   var jsonEvents = [];var eventById = {};
     $.ajax({
     	url: "/api/events/event_list",
 		type: "GET",
+		data:checkCookie.split('=')[1],
 		contentType: "application/json",
     	success:function(json) {
+    	    
+    	    
     		 //populate events calendar
     		for (var i = 0; i < json.length; i++) {
         		jsonEvents.push({title: json[i].event_name, start: json[i].start_date});
     		}
-    		
-    		$("#eventsList").empty();
+    		if(json.length==0){
+    		    $("#eventsList").empty();
+    		   $("#eventsList").append('<li class="nav-header">No events available. Click on Create Event to create an event.</li>'); 
+    		}else{
+    		        $("#eventsList").empty();
       					var sb = [];
       					
       					sb.push('<li class="nav-header">Upcoming events</li>');
@@ -255,7 +266,7 @@
       					
       					});
       					$("#eventsList").append(sb.join(''));
-    		
+    		}
     	}
     });
     $("#calendar").fullCalendar({
@@ -279,12 +290,7 @@
         }
       }
     });
-    var checkCookie = document.cookie;
-      if(checkCookie==undefined ||checkCookie=="" || checkCookie==null ){
-            window.location.replace('index.html');
-      }else{
-          $('.title').text(checkCookie.split('=')[0]);
-      }
+    
 </script>
 
 </body>

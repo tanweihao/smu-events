@@ -345,11 +345,10 @@
 </script>
 
 <script type="text/javascript">
-   var checkCookie = document.cookie;
-      if(checkCookie==undefined ||checkCookie=="" || checkCookie==null ){
+   if(readCookie("username")==undefined ||readCookie("username")=="" || readCookie("username")==null ){
             window.location.replace('index.html');
       }else{
-          $('.title').text(checkCookie.split('=')[0]);
+          $('.title').text(readCookie("username"));
       }
 </script>
 

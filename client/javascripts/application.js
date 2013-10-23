@@ -34465,20 +34465,29 @@ plots, you can just fix the size of their placeholders.
 		    },
     	    success:function(json) {
     	        console.log(json);
-    	        Notifications.push({
-                    text: "<i class='icon-success-sign'></i> Successfully Logged in!",
-                    autoDismiss: 3,
-                    "class": "success"
-                });
-                Date.prototype.addHours= function(h){
-    				this.setHours(this.getHours()+h);
-    				return this;
-				}
-                var expireDate = new Date().addHours(4);
-                //document.cookie = username+'='+json+';expires='+expireDate;
-                createCookie("username",username,3);
-                createCookie("orgId",json.result,3);
-                window.location.replace("fullcalendar.html");
+    	        if(json.result==-1){
+    	            Notifications.push({
+                        text: "<i class='icon-warning-sign'></i>Error : Invalid username or password. Please try again.",
+                        autoDismiss: 3,
+                        "class": "error"
+                    });
+    	        }else{
+    	            Notifications.push({
+                        text: "<i class='icon-success-sign'></i> Successfully Logged in!",
+                        autoDismiss: 3,
+                        "class": "success"
+                    });
+                    Date.prototype.addHours= function(h){
+    				    this.setHours(this.getHours()+h);
+    				    return this;
+			    	}
+                    var expireDate = new Date().addHours(4);
+                    //document.cookie = username+'='+json+';expires='+expireDate;
+                    createCookie("username",username,3);
+                    createCookie("orgId",json.result,3);
+                    window.location.replace("fullcalendar.html");
+    	        }
+    	        
     	    }
         });
         /*var wrapper;

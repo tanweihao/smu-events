@@ -7,6 +7,6 @@
   "author": "",
   "dependencies": {
     "express": "~3.2.4",
-    "socket.io": "~0.9.16"
+    "socket.io": ">=0.9.13"
   }
 }

@@ -61,13 +61,16 @@ Description:
 * Checks if password is valid, returns -1 if invalid
 * Returns the user ID if both username and password is valid
   
-Useful Git Commands
+Project Setup and Administration
 -------------------
 __Deploying to Heroku from C9__  
 git add -A .  
 git commit -a -m "Comments here"  
 git push  
 git push heroku-target master  
+  
+__Installing socket.io__  
+http://www.gianlucaguarini.com/blog/nodejs-and-a-simple-push-notification-server/  
   
 __Linking Cloud9 with Git__  
 http://support.cloud9ide.com/entries/21468947-Deploy-your-app-to-Heroku-using-the-Cloud9-console  

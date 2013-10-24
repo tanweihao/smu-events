@@ -259,8 +259,8 @@
       							sb.push('<ul><li><h5 style="padding:0;margin:0;">'+e.event_name+'</h5></li>');
  								sb.push('<li>'+e.description+'</li>');
  								//sb.push('<li>Organized by '+e.org_name+'</li>');
- 								sb.push('<li><i class="icon-time"></i>'+eDate.toDateString()+' '+eDate.toTimeString()+'</li>');
- 								sb.push('<li><i class="icon-time"></i>'+new Date(e.end_date)+'</li>');
+ 								sb.push('<li><i class="icon-time"></i>'+eDate.toDateString()+' '+(eDate.getHours()<10?'0':'') + eDate.getHours() +":"+(eDate.getMinutes()<10?'0':'') + eDate.getMinutes() +'</li>');
+ 								sb.push('<li><i class="icon-time"></i>'+endDate.toDateString()+' '+(endDate.getHours()<10?'0':'') + endDate.getHours() +":"+(endDate.getMinutes()<10?'0':'') + endDate.getMinutes() +'</li>');
 								sb.push('<li><i class=" icon-map-marker"></i>'+e.venue+'</li></ul>');
 								sb.push('</div></a></li>');
       						}
@@ -282,8 +282,8 @@
    								sb.push('<ul><li><h5 style="padding:0;margin:0;">'+e.event_name+'</h5></li>');
  								sb.push('<li>'+e.description+'</li>');
  								//sb.push('<li>Organized by '+e.org_name+'</li>');
- 								sb.push('<li><i class="icon-time"></i>'+eDate.toDateString()+' '+eDate.toTimeString()+'</li>');
- 								sb.push('<li><i class="icon-time"></i>'+new Date(e.end_date)+'</li>');
+ 								sb.push('<li><i class="icon-time"></i>'+eDate.toDateString()+' '+(eDate.getHours()<10?'0':'') + eDate.getHours() +":"+(eDate.getMinutes()<10?'0':'') + eDate.getMinutes() +'</li>');
+ 								sb.push('<li><i class="icon-time"></i>'+endDate.toDateString()+' '+(endDate.getHours()<10?'0':'') + endDate.getHours() +":"+(endDate.getMinutes()<10?'0':'') + endDate.getMinutes() +'</li>');
 								sb.push('<li><i class=" icon-map-marker"></i>'+e.venue+'</li></ul>');
 								sb.push('</div></a></li>');
       						}

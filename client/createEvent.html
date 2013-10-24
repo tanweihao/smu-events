@@ -150,149 +150,65 @@
 
     <div class="box">
       <div class="tab-header">
-        Forms
+        Event Details
         <span class="pull-right">
           <span class="options">
             <a href="#"><i class="icon-cog"></i></a>
           </span>
         </span>
       </div>
-      <form class="fill-up">
+     
         <div class="row-fluid">
           <div class="span6">
             <div class="padded">
               <div class="input">
-                <input type="text" placeholder="Email"/>
+                
+                <input name="eventName" type="text" placeholder="Event Name"/>
               </div>
               <div class="input">
-                <input type="text" placeholder="Address"/>
+              	
+                <input name="eventDescription" type="text" placeholder="Event Description"/>
               </div>
-              <div class="input">
-                <input type="text" placeholder="Username" class="error"/>
-                <span class="input-error" data-title="please write a valid username">
-                  <i class="icon-warning-sign"></i>
-                </span>
+              
+             <div class="input">
+			
+              <input name="startDate" id="datetimepicker" type="text" class="fill-up" value="Start Date">
+             	</div>
+             	  
+             <div class="input">
+			
+              <input name="endDate" id="datetimepicker1" type="text" class="fill-up" value="End Date">
+             	</div>
+               <div class="input">
+                
+                <input name="venue" type="text" placeholder="Venue"/>
               </div>
-
-              <div class="input">
-                <input type="password" placeholder="Password" class="error"/>
-                <span class="input-error" data-title="please write a valid password">
-                  <i class="icon-warning-sign"></i>
-                </span>
+              <div class="fileupload-preview">
+              		<img class="preview" src="" style="width:200px;height:200px;"/>
               </div>
-
-              <div class="note pull-right">Please use a secure password</div>
-
-              <div class="input">
-                <select name="city" id="city" placeholder="City" class="fill-up chzn-select">
-                  <option>Seattle</option>
-                  <option>Chicago</option>
-                  <option>New York</option>
-                </select>
-              </div>
-
-
-              <div class="input" style="padding-top: 20px;">
-                <select style="margin-top: 20px;" multiple="multiple" name="city2" id="city2" placeholder="City" class="fill-up chzn-select">
-                  <option>Seattle</option>
-                  <option>Chicago</option>
-                  <option>New York</option>
-                </select>
-              </div>
-
-              <div class="input">
-                <textarea class="tagme" placeholder="This is a textarea"></textarea>
-              </div>
+				<div class="fileupload fileupload-new" data-provides="fileupload">
+  <span class="btn btn-file"><span class="fileupload-new"></span><span class="fileupload-exists"></span><input type="file" name="file"/></span>
+  <span class="fileupload-preview"></span>
+  <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none">X</a>
+</div>
             </div>
           </div>
 
           <div class="span6">
 
             <div class="padded" style="padding-bottom: 0">
-              <div class="input">
-                <textarea placeholder="This is a textarea" rows="6"></textarea>
-              </div>
+              
+              
 
-              <div class="row-fluid">
-
-                <div class="span6">
-                  <div class="input">
-                    <input type="checkbox" id="ch1" class="normal-check"/>
-                    <label for="ch1">The number one option</label>
-                  </div>
-                  <div class="input">
-                    <input type="checkbox" id="ch2" class="normal-check"/>
-                    <label for="ch2">The number two option</label>
-                  </div>
-                </div>
-                <div class="span6">
-                  <div class="input">
-                    <input type="checkbox" id="ch3" class="normal-check"/>
-                    <label for="ch3">The number three option</label>
-                  </div>
-                  <div class="input">
-                    <input type="checkbox" id="ch4" class="normal-check"/>
-                    <label for="ch4">The number four option</label>
-                  </div>
-                </div>
-              </div>
-
-              <input id="datetimepicker" type="text" class="fill-up" value="jQuery date time picker">
-
-              <div class="row-fluid">
-
-                <div class="span6">
-                  <div class="input">
-                    <input type="radio" name="radios[]" id="rd1" class="normal-radio"/>
-                    <label for="rd1">The number one option</label>
-                  </div>
-
-                  <div class="input">
-                    <input type="radio" name="radios[]" id="rd2" class="normal-radio"/>
-                    <label for="rd2">The number two option</label>
-                  </div>
-                </div>
-                <div class="span6">
-                  <div class="input">
-                    <input type="radio" name="radios[]" id="rd3" class="normal-radio"/>
-                    <label for="rd3">The number two option</label>
-                  </div>
-                  <div class="input">
-                    <input type="radio" name="radios[]" id="rd4" class="normal-radio"/>
-                    <label for="rd4">The number four option</label>
-                  </div>
-                </div>
-              </div>
-              <div class="row-fluid">
-                <div class="span12">
-
-                  <div class="note large">
-                    <i class="icon-warning-sign"></i> Warning: You have to complete all fields
-                  </div>
-                  <div class="note large">
-                    <i class="icon-pencil"></i> Note: The checkboxes and radios are turned on-off entirely out of css. no javascript involved!
-                  </div>
-
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non felis non orci congue mollis. Sed euismod magna sed nunc dignissim tincidunt. Maecenas faucibus varius elit.
-                  </p>
-                </div>
-              </div>
+             
             </div>
           </div>
         </div>
-        <div class="form-actions">
-          <button type="submit" class="button blue">Save changes</button>
-          <button type="button" class="button">Cancel</button>
-          <div class="pull-right">
-            <span class="checky-label-left">
-              Sign me up for tha' newsletter!
-            </span>
-            <input type="checkbox" id="nM2aX" class="checky" />
-            <label for="nM2aX" class="checky"><span></span></label>
-          </div>
-        </div>
-      </form>
+ 		<div class="padded">
+          <button name="saveEvent"  class="button blue">Save</button>
+          <button name="cancelEvent" type="button" class="button">Cancel</button>
+		</div>
+      
     </div>
   </div>
 </div>
@@ -334,6 +250,7 @@
     </div>
   </div>
 </script>
+
 <script src="javascripts/application.js" type="text/javascript"></script>
 <script src="javascripts/docs.js" type="text/javascript"></script>
 <script src="javascripts/docs_charts.js" type="text/javascript"></script>
@@ -350,6 +267,33 @@
       }else{
           $('.title').text(readCookie("username"));
       }
+      
+      $('button[name="saveEvent"]').on("click",function(){
+      	  var eventName = $('input[name="eventName"]').val();
+      	  var eventDescription = $('input[name="eventDescription"]').val();
+      	  var startDate = $('input[name="startDate"]').val();
+      	  var endDate = $('input[name="endDate"]').val();
+      	  var venue = $('input[name="venue"]').val();
+      	  var image = $('input[name="file"]').val();
+      	  console.log(eventName+" "+eventDescription+" "+startDate+" "+endDate+" "+venue+" "+image);
+      });
+      
+      function readURL(input) {
+
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('.preview').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+$('input[name="file"]').change(function(){
+    readURL(this);
+});
 </script>
 
 </body>

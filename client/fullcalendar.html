@@ -254,7 +254,7 @@
       						var nowDate = new Date();
       						if(eDate > nowDate){
       							checkUpcomingEvents++;
-      							sb.push('<li style="min-height:145px !important;"><a href="#"><div class="thumbnail clearfix">');
+      							sb.push('<li style="min-height:145px !important;max-height:145px !important;"><a href="#"><div class="thumbnail clearfix">');
       							sb.push('<img src="images/gallery/large/img'+e.id+'.jpg" alt="ALT NAME" class="pull-left span5 clearfix" style="margin-right:10px;min-height:145px !important;">');
    								//sb.push('<div class="caption"><h3>'+e.event_name+'</h3><h6>'+e.description+'</h6><h6><i class="icon-search"></i>'+e.start_date+'</h6><h6><i class="icon-search"></i>'+e.end_date+'</h6><small><b>ID: </b>'+e.id+'</small> </div></div></a></li>');
       							sb.push('<ul><li><h5 style="padding:0;margin:0;">'+e.event_name+'</h5></li>');
@@ -277,7 +277,7 @@
       						var nowDate = new Date();
       						if(eDate < nowDate){
       							checkPastEvents++;
-      							sb.push('<li><a href="#"><div class="thumbnail clearfix">');
+      							sb.push('<li style="min-height:145px !important;max-height:145px !important;"><a href="#"><div class="thumbnail clearfix">');
       							sb.push('<img src="images/gallery/large/img'+e.id+'.jpg" alt="ALT NAME" class="pull-left span5 clearfix" style="margin-right:10px;min-height:100px;">');
    								//sb.push('<div class="caption"><h2>'+e.event_name+'</h2><small><b>ID: </b>'+e.id+'</small> </div></div></a></li>');
    								sb.push('<ul><li><h5 style="padding:0;margin:0;">'+e.event_name+'</h5></li>');

@@ -147,7 +147,7 @@
   <div class="container-fluid">
     <div class="row-fluid">
 
-  <div class="span5" id='external-events' style="max-height:700px;">
+  <div class="span6" id='external-events' style="max-height:700px;">
     <div class="nav-menu box">
       <ul class="nav nav-list" id="eventsList">
       
@@ -155,7 +155,7 @@
     </div>
   </div>
 
-  <div class="span7">
+  <div class="span6">
     <div class="box padded">
       <div id='calendar'></div>
     </div>
@@ -210,16 +210,22 @@
 
 <script type="text/javascript">
   $(".search-bar-nav").toggleClass("open");
-  var checkCookie = document.cookie;
-      if(readCookie("username")==undefined ||readCookie("username")=="" || readCookie("username")==null ){
-            window.location.replace('index.html');
-      }else{
-          $('.title').text(readCookie("username"));
-      }
-  var jsonEvents = [];var eventById = {};
-  var orgId = '{"org_id":"'+readCookie("orgId")+'"}';
-    $.ajax({
-    	url: "/api/events/event_list",
+  //var checkCookie = document.cookie;
+  if(readCookie("username")==undefined ||readCookie("username")=="" || readCookie("username")==null ){
+  	window.location.replace('index.html');
+  }else{
+    $('.title').text(readCookie("username"));
+  } 
+  
+  refreshEvents();
+  
+  function refreshEvents(){
+  	var jsonEvents = [];var eventById = {};
+  	var checkUpcomingEvents = 0; var checkPastEvents = 0;
+  	//var orgId = '{"org_id":"'+readCookie("orgId")+'"}';
+  	var orgId = 'org_id='+readCookie("orgId");
+  	$.ajax({
+    	url: "http://smu-events.herokuapp.com/api/events/event_list",
 		type: "GET",
 		data:orgId,
 		contentType: "application/json",
@@ -237,40 +243,66 @@
     		        $("#eventsList").empty();
       					var sb = [];
       					
-      					sb.push('<li class="nav-header">Upcoming events</li>');
+      					sb.push('<li class="nav-header" id="upcomingEvents">Upcoming events</li>');
       					$(json).each(function(i,e){
       						eventById[e.id] = e;
       						//var dateParts = e.start_date.split("/");
       						//var eDate = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
       						var eDate = new Date(e.start_date);
+      						var endDate = new Date(e.end_date);
       						var nowDate = new Date();
       						if(eDate > nowDate){
-      							sb.push('<li><a href="#"><div class="thumbnail clearfix">');
-      							sb.push('<img src="images/gallery/large/img'+e.id+'.jpg" alt="ALT NAME" class="pull-left span5 clearfix" style="margin-right:10px;min-height:100px;">');
-   								sb.push('<div class="caption"><h4>'+e.event_name+'</h4><small><b>ID: </b>'+e.id+'</small> </div></div></a></li>');
+      							checkUpcomingEvents++;
+      							sb.push('<li style="min-height:145px !important;"><a href="#"><div class="thumbnail clearfix">');
+      							sb.push('<img src="images/gallery/large/img'+e.id+'.jpg" alt="ALT NAME" class="pull-left span5 clearfix" style="margin-right:10px;min-height:145px !important;">');
+   								//sb.push('<div class="caption"><h3>'+e.event_name+'</h3><h6>'+e.description+'</h6><h6><i class="icon-search"></i>'+e.start_date+'</h6><h6><i class="icon-search"></i>'+e.end_date+'</h6><small><b>ID: </b>'+e.id+'</small> </div></div></a></li>');
+      							sb.push('<ul><li><h5 style="padding:0;margin:0;">'+e.event_name+'</h5></li>');
+ 								sb.push('<li>'+e.description+'</li>');
+ 								//sb.push('<li>Organized by '+e.org_name+'</li>');
+ 								sb.push('<li><i class="icon-time"></i>'+eDate.toDateString()+' '+eDate.toTimeString()+'</li>');
+ 								sb.push('<li><i class="icon-time"></i>'+new Date(e.end_date)+'</li>');
+								sb.push('<li><i class=" icon-map-marker"></i>'+e.venue+'</li></ul>');
+								sb.push('</div></a></li>');
       						}
       						
       					});
       					
-      					sb.push('<li class="nav-header">Past events</li>');
+      					sb.push('<li class="nav-header" id="pastEvents">Past events</li>');
       					$(json).each(function(i,e){
       						//var dateParts = e.start_date.split("/");
       						//var eDate = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
       						var eDate = new Date(e.start_date);
+      						var endDate = new Date(e.end_date);
       						var nowDate = new Date();
       						if(eDate < nowDate){
+      							checkPastEvents++;
       							sb.push('<li><a href="#"><div class="thumbnail clearfix">');
       							sb.push('<img src="images/gallery/large/img'+e.id+'.jpg" alt="ALT NAME" class="pull-left span5 clearfix" style="margin-right:10px;min-height:100px;">');
-   								sb.push('<div class="caption"><h4>'+e.event_name+'</h4><small><b>ID: </b>'+e.id+'</small> </div></div></a></li>');
+   								//sb.push('<div class="caption"><h2>'+e.event_name+'</h2><small><b>ID: </b>'+e.id+'</small> </div></div></a></li>');
+   								sb.push('<ul><li><h5 style="padding:0;margin:0;">'+e.event_name+'</h5></li>');
+ 								sb.push('<li>'+e.description+'</li>');
+ 								//sb.push('<li>Organized by '+e.org_name+'</li>');
+ 								sb.push('<li><i class="icon-time"></i>'+eDate.toDateString()+' '+eDate.toTimeString()+'</li>');
+ 								sb.push('<li><i class="icon-time"></i>'+new Date(e.end_date)+'</li>');
+								sb.push('<li><i class=" icon-map-marker"></i>'+e.venue+'</li></ul>');
+								sb.push('</div></a></li>');
       						}
       						
       					
       					});
+      					
       					$("#eventsList").append(sb.join(''));
+      					console.log(checkUpcomingEvents+" "+checkPastEvents);
+      					if(checkUpcomingEvents==0){
+      						$("#upcomingEvents").hide();
+      					}
+      					if(checkPastEvents==0){
+      						$("#pastEvents").hide();
+      					}
     		}
     	}
     });
-    $("#calendar").fullCalendar({
+  	$("#calendar").fullCalendar({
       events : jsonEvents,
       header: {
         left: 'prev,next today',
@@ -291,7 +323,10 @@
         }
       }
     });
-    
+  }
+
+ 
+   
 </script>
 
 </body>

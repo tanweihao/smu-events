@@ -86,10 +86,16 @@
     </div>
   </div>
 </script><script src="javascripts/application.js" type="text/javascript"></script>
+<script src="javascripts/jquery.timepicker.min.js" type="text/javascript"></script>
 <script src="javascripts/docs.js" type="text/javascript"></script>
 <script src="javascripts/docs_charts.js" type="text/javascript"></script>
 <script>
-    eraseCookie("username");eraseCookie("orgId");
+    if(readCookie("username")!=="" && readCookie("orgId")!==""){
+        window.location.replace('fullcalendar.html');
+    }else{
+        eraseCookie("username");eraseCookie("orgId");
+    }
+    
 </script>
 </body>
 </html>

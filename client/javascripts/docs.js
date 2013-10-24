@@ -161,7 +161,7 @@
     return ConfirmAction;
 
   })();
-
+  
   $(function() {
     $("html, body").off("touchstart");
     $("#modal-link").click(function() {
@@ -173,6 +173,8 @@
     new Faq($(".faq-list"));
     $('#datetimepicker').datepicker();
     $('#datetimepicker1').datepicker();
+    $('#timepicker').timepicker();
+    $('#timepicker1').timepicker();
     new ConfirmAction($("#fix-stats"));
     new ConfirmAction($("#fix-stats2"));
     new CalendarEvents($('#external-events'));
@@ -181,7 +183,7 @@
       "sPaginationType": "full_numbers",
       "sDom": '<""l>t<"F"fp>'
     });
-
+    
   });
 
 }).call(this);

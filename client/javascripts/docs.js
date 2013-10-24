@@ -172,6 +172,7 @@
     $('textarea.tagme').tagify();
     new Faq($(".faq-list"));
     $('#datetimepicker').datepicker();
+    $('#datetimepicker1').datepicker();
     new ConfirmAction($("#fix-stats"));
     new ConfirmAction($("#fix-stats2"));
     new CalendarEvents($('#external-events'));

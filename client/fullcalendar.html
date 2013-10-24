@@ -135,9 +135,9 @@
     </div>
 
     <div class="row-fluid search-bar-nav">
-      <div class="span12">
-        <form>
-          <input type="text" class="search" placeholder="Search events...">
+      <div id="header" class="span12">
+        <form id="searchForm">
+          <input id="searchEvents" type="text" class="search" placeholder="Search events...">
         </form>
       </div>
     </div>
@@ -146,16 +146,18 @@
 
   <div class="container-fluid">
     <div class="row-fluid">
-
-  <div class="span6" id='external-events' style="max-height:700px;">
+	
+  <div class="span5" id='external-events' style="max-height:700px;">
+  	
     <div class="nav-menu box">
+    	
       <ul class="nav nav-list" id="eventsList">
       
       </ul>
     </div>
   </div>
 
-  <div class="span6">
+  <div class="span7">
     <div class="box padded">
       <div id='calendar'></div>
     </div>
@@ -221,7 +223,8 @@
   refreshEvents();
   
   function refreshEvents(){
-  	var jsonEvents = [];var eventById = {};
+ 
+  	var jsonEvents = [];var eventById = {};var eventByName = {};var eventNames =[];
   	var checkUpcomingEvents = 0; var checkPastEvents = 0;
   	//var orgId = '{"org_id":"'+readCookie("orgId")+'"}';
   	var orgId = 'org_id='+readCookie("orgId");
@@ -247,6 +250,8 @@
       					sb.push('<li class="nav-header" id="upcomingEvents">Upcoming events</li>');
       					$(json).each(function(i,e){
       						eventById[e.id] = e;
+      						eventByName[e.event_name] = e;
+      						eventNames[i]=e.event_name;
       						//var dateParts = e.start_date.split("/");
       						//var eDate = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
       						var eDate = new Date(e.start_date);
@@ -324,6 +329,50 @@
         }
       }
     });
+   
+    $("#searchEvents").typeahead({
+      		source:eventNames,
+      		updater:function(a){
+      			console.log(eventByName[a].id);
+      		}
+      });
+      
+      
+
+(function ($) {
+  jQuery.expr[':'].Contains = function(a,i,m){
+      return (a.textContent || a.innerText || "").toUpperCase().indexOf(m[3].toUpperCase())>=0;
+  };
+  
+  function listFilter(header, list) {
+   // var form = $("<form>").attr({"class":"filterform","action":"#"}),
+       // input = $("<input>").attr({"class":"filterinput","type":"text"});
+    //$(form).append(input).appendTo(header);
+ 	var form = $('#searchForm');
+ 	    input = $('#searchEvents');
+    $(input)
+      .change( function () {
+        var filter = $(this).val();
+        if(filter) {
+          $(list).find("a:not(:Contains(" + filter + "))").parent().slideUp();
+          $(list).find("a:Contains(" + filter + ")").parent().slideDown();
+        } else {
+          $(list).find("li").slideDown();
+        }
+        return false;
+      })
+    .keyup( function () {
+        $(this).change();
+    });
+  }
+ 
+  $(function () {
+    listFilter($("#header"), $("#eventsList"));
+  });
+}(jQuery));
+ 
+ 
+
   }
 
  

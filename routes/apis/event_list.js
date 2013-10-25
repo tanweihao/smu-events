@@ -12,9 +12,7 @@ module.exports = function (args) {
         
         if (org_id == "") {
             eventCollection.find({
-                start_date: {
-                    $gte: new Date()
-                }
+                
             }, {
                 limit: 10,
                 skip: page
@@ -27,9 +25,6 @@ module.exports = function (args) {
             });
         } else {
             eventCollection.find({
-                start_date: {
-                    $gte: new Date()
-                },
                 org_id: org_id
             }, {
                 limit: 10,
@@ -42,6 +37,5 @@ module.exports = function (args) {
                 }
             });
         }
-        
     });
 }

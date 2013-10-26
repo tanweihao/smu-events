@@ -17,7 +17,7 @@ module.exports = function (args) {
                     end_date: new Date(req.body.end_date),
                     venue: req.body.venue,
                     description: req.body.description,
-                    signups: []
+                    signups: [1,2]
                 }, function(err, event) {
                     if (!err) {
                         res.json({

@@ -18,16 +18,24 @@ module.exports = function (args) {
         (_get.page) ? (options.skip = _get.page * 10) : 0;
         (_get.org_id) ? (query.org_id = parseInt(_get.org_id)) : "";
         if (_get.past_events) {
-            query.signups = parseInt(_get.past_events);
+            query.signups = {
+                $elemMatch: {
+                    id: parseInt(_get.past_events)
+                }
+            };
             query.start_date = {
                 $lte: new Date()
-            }
+            };
         }
         if (_get.future_events) {
-            query.signups = parseInt(_get.future_events);
+            query.signups = {
+                $elemMatch: {
+                    id: parseInt(_get.future_events)
+                }
+            };
             query.start_date = {
                 $gte: new Date()
-            }
+            };
         }
         
         eventCollection.find(query, options).toArray(function(err, events) {

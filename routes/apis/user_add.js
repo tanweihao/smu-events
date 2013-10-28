@@ -1,7 +1,7 @@
 module.exports = function (args) {
     var app = args.app,
         db = args.db;
-    app.post('/api/users/add_user', function (req, res) {
+    app.post('/api/users/add_organizer', function (req, res) {
         var userCollection = db.collection('users');
         
         userCollection.count(function(err, docs) {
@@ -11,7 +11,8 @@ module.exports = function (args) {
                 userCollection.insert({
                     id: id,
                     username: req.body.username,
-                    password: req.body.password
+                    password: req.body.password,
+                    role: "org"
                 }, function(err, user) {
                     if (!err) {
                         res.json({

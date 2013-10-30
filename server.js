@@ -26,22 +26,13 @@ MongoClient.connect(connection_string, function (err, db) {
             url: url,
             fs: fs,
             db: db,
+            io: io,
             rootDir: rootDir
         };
         
         require('./routes/routes')(args);
         server.listen(process.env.PORT || 3000, function() {
             console.log('Express server started on port %s', process.env.PORT);
-        });
-        
-        io.sockets.on('connection', function(socket) {
-            socket.emit('news', {
-                hello: 'world'
-            });
-            
-            socket.on('my other event', function(data) {
-                console.log(data);
-            });
         });
     } else {
         console.log(err);

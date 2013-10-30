@@ -326,7 +326,8 @@
       	  var image = $('input[name="file"]').val();
       	  
       	  console.log(eventName+" "+eventDescription+" "+startDateTime+" "+endDateTime+" "+faculty+"/"+room+" "+image);
-      	  var eventData = '{"event_name":"'+eventName+'","org_name":"'+readCookie("username")+'","org_id":'+readCookie("orgId")+',"start_date":"'+startDateTime+'","end_date":"'+endDateTime+'","venue":"'+venue+'","description":"'+eventDescription+'"}';
+      	  //var eventData = '{"event_name":"'+eventName+'","org_name":"'+readCookie("username")+'","org_id":'+readCookie("orgId")+',"start_date":"'+startDateTime+'","end_date":"'+endDateTime+'","venue":"'+venue+'","description":"'+eventDescription+'"}';
+          var eventData = '{"event_name":"'+eventName+'","org_id":'+readCookie("orgId")+',"start_date":"'+startDateTime+'","end_date":"'+endDateTime+'","venue":"'+venue+'","description":"'+eventDescription+'"}';      	 
       	  $.ajax({
     	    url: "http://smu-events.herokuapp.com/api/events/add_event",
 		    type: "POST",

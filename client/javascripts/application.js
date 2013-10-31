@@ -34484,8 +34484,17 @@ plots, you can just fix the size of their placeholders.
                     var expireDate = new Date().addHours(4);
                     //document.cookie = username+'='+json+';expires='+expireDate;
                     createCookie("username",username,3);
-                    createCookie("orgId",json.result,3);
-                    window.location.replace("fullcalendar.html");
+                    createCookie("role",json.role,3);
+                    if(json.role == "org"){
+                    	createCookie("orgId",json.id,3);
+                    	window.location.replace("fullcalendar.html");
+                    }
+                    if(json.role == "TA"){
+                    	createCookie("taId",json.id,3);
+                    	window.location.replace("attendance.html");
+                    }
+                    
+                   
     	        }
     	        
     	    }

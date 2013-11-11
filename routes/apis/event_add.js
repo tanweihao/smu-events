@@ -8,7 +8,7 @@ module.exports = function(args) {
         userCollection.findOne({
             id: req.body.org_id
         }, function(err, user) {
-            if (!err) {
+            if (!err && typeof user != 'undefined') {
                 eventCollection.count(function(err, docs) {
                     if (!err) {
                         var id = docs + 1;
@@ -40,7 +40,5 @@ module.exports = function(args) {
                 });
             }
         });
-
-
     });
 }

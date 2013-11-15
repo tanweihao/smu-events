@@ -12,7 +12,7 @@ module.exports = function (args) {
         }, [], {
             $addToSet: {
                 signups: {
-                    id: uid,
+                    uid: uid,
                     email: req.body.email,
                     registered: false
                 }
@@ -23,8 +23,9 @@ module.exports = function (args) {
             if (!err && event != null) {
                 request.post('http://athena.smu.edu.sg/hestia/livelabs/index.php/broadcast/ping_others', {
                     form: {
-                        to: "{'to':[{'id':"+uid+"}]",
-                        loc: "{'loc':[{'type':10}",
+                        to: "{'to':[{'id':"+uid+"}]}",
+                        loc: "{'loc':[{'type':10}]}",
+                        expiry: 336,
                         content: '{"type":1, "event_name":"'+event.event_name+'"}',
                         appid: "176110"
                     },

@@ -40,10 +40,10 @@ module.exports = function (args) {
         
         eventCollection.find(query, options).toArray(function(err, events) {
             if (!err) {
-                var user_id = parseInt(_get.user_id);
+                var uid = parseInt(_get.uid);
                 events.forEach(function(event) {
-                    if (_get.user_id) {
-                        (event.signups.indexOf(user_id) == -1) ? (event.status = false) : (event.status = true);
+                    if (_get.uid) {
+                        searchUid(event, uid);
                     }
                     delete event.signups;
                 });
@@ -53,4 +53,14 @@ module.exports = function (args) {
             }
         });
     });
+}
+
+function searchUid(event, uid) {
+    for (var i = 0; i < event.signups.length; i++) {
+        if (event.signups[i].uid === uid) {
+            event.status = true;
+            return;
+        }
+    }
+    event.status = false;
 }

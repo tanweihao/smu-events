@@ -27,12 +27,12 @@ module.exports = function(args) {
                             description: req.body.description,
                             code: dateStr,
                             signups: [{
-                                id: 10031355,
-                                email: "weihao.tan.2010@sis.smu.edu.sg",
+                                uid: 10031355,
+                                email: "859ceecbc1131cd1a3256905113ac6ffb8abbb6c",
                                 registered: false
                             }, {
-                                id: 10059946,
-                                email: "jwijayanti.2011@sis.smu.edu.sg",
+                                uid: 10059946,
+                                email: "69781f0ba56486e50652217ee26473a1c5e62752",
                                 registered: false
                             // }, {
                             //     id: 90081053,

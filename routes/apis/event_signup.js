@@ -36,11 +36,11 @@ module.exports = function (args) {
                     hello: 'world'
                 });
                 res.json({
-                    result: true
+                    status: "success"
                 });
             }
             res.json({
-                result: false
+                status: "fail"
             });
         });
     });

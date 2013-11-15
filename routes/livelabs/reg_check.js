@@ -1,6 +1,5 @@
 module.exports = function(args) {
     var db = args.db,
-        crypto = args.crypto,
         request = args.request;
     
     var date = new Date(),
@@ -20,13 +19,9 @@ module.exports = function(args) {
     }, 5000);
     
     function regUser(user, location) {
-        var emailSHA = crypto.createHash('sha1');
-        emailSHA.update(user.email);
-        var emailHash = emailSHA.digest('hex');
-        
         request.post('http://athena.smu.edu.sg/hestia/livelabs/index.php/user_location/userlocation', {
             form: {
-                email: emailHash,
+                email: user.email,
                 appid: "176110"
             },
             jar: true

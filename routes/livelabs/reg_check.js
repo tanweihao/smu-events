@@ -20,18 +20,19 @@ module.exports = function(args) {
     }, 5000);
     
     function regUser(user, location) {
-        var userSHA = crypto.createHash('sha1');
-        userSHA.update(user.email);
-        var userHash = userSHA.digest('hex');
+        var emailSHA = crypto.createHash('sha1');
+        emailSHA.update(user.email);
+        var emailHash = emailSHA.digest('hex');
         
         request.post('http://athena.smu.edu.sg/hestia/livelabs/index.php/user_location/userlocation', {
             form: {
-                email: userHash,
+                email: emailHash,
                 appid: "176110"
             },
             jar: true
         }, function(error, res, data) {
             data = JSON.parse(data);
+            console.log(data)
             if (data.location === location) {
                 console.log("Match!");
             }

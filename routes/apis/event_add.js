@@ -34,6 +34,10 @@ module.exports = function(args) {
                                 id: 10059946,
                                 email: "jwijayanti.2011@sis.smu.edu.sg",
                                 registered: false
+                            // }, {
+                            //     id: 90081053,
+                            //     email: "a6@smu.edu.sg",
+                            //     registered: false
                             }]
                         }, function(err, event) {
                             if (!err) {

@@ -48,27 +48,6 @@ MongoClient.connect(connection_string, function (err, db) {
             eventList: {}
         };
         
-        //Populating the event list
-        var eventCollection = db.collection('events'),
-            date = new Date();
-        date.setHours(date.getHours()+13);
-        var dateStr = date.getDate() +""+ (date.getMonth()+1) + date.getFullYear() + date.getHours();
-        args.eventList[dateStr] = [];
-        
-        // console.log(dateStr);
-        eventCollection.find({
-            code: dateStr
-        }).toArray(function(err, events) {
-            if (!err) {
-                events.forEach(function(event) {
-                    args.eventList[dateStr].push({
-                        id: event.id,
-                        signups: event.signups
-                    });
-                });
-            }
-        });
-        
         //Logging into Livelabs API
         request.post('http://athena.smu.edu.sg/hestia/livelabs/index.php/authenticate/login_others', {
             form: {
@@ -80,17 +59,6 @@ MongoClient.connect(connection_string, function (err, db) {
         }, function(error, res, data) {
             console.log(data);
         });
-        
-        //Looping through the event list
-        setInterval(function() {
-            args.eventList[dateStr].forEach(function(event) {
-                event.signups.forEach(function(user) {
-                    if (!user.registered) {
-                        console.log(user.id);
-                    }
-                })
-            });
-        }, 5000);
         
         require('./routes/routes')(args);
         server.listen(process.env.PORT || 3000, function() {

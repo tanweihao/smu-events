@@ -13,7 +13,7 @@ module.exports = function(args) {
                     if (!err) {
                         var id = docs + 1,
                             start_date = new Date(req.body.start_date);
-                        start_date.setHours(start_date.getHours()+6);
+                        start_date.setHours(start_date.getHours()+5);
                         var dateStr = start_date.getDate() +""+ (start_date.getMonth()+1) + start_date.getFullYear() + start_date.getHours();
                         
                         eventCollection.insert({
@@ -27,10 +27,12 @@ module.exports = function(args) {
                             description: req.body.description,
                             code: dateStr,
                             signups: [{
-                                id: 1,
+                                id: 10031355,
+                                email: "weihao.tan.2010@sis.smu.edu.sg",
                                 registered: false
                             }, {
-                                id: 2,
+                                id: 10059946,
+                                email: "jwijayanti.2011@sis.smu.edu.sg",
                                 registered: false
                             }]
                         }, function(err, event) {

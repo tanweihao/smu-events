@@ -19,7 +19,7 @@ module.exports = function (args) {
         //Handling of optional parameters
         (_get.page) ? (options.skip = _get.page * 10) : 0;
         (_get.uid) ? (query.uid = parseInt(_get.uid)) : "";
-        (_get.keyword) ? (query.name = _get.keyword) : "";
+        (_get.keyword) ? (query.name = { $regex: _get.keyword }) : "";
         (_get._id) ? (query._id = BSON.ObjectID(_get._id)) : "";
         
         //Ignore status parameter if retrieving by user or item ID

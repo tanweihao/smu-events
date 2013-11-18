@@ -14,6 +14,7 @@ module.exports = function (args) {
         
         (_get.page) ? (options.skip = _get.page * 10) : 0;
         (_get.org_id) ? (query.org_id = parseInt(_get.org_id)) : "";
+        (_get.keyword) ? (query.event_name = { $regex: _get.keyword }) : "";
         if (_get.past_events) {
             query.signups = {
                 $elemMatch: {

@@ -1,14 +1,16 @@
 module.exports = function (args) {
     var app = args.app,
+        mongodb = args.mongodb,
         db = args.db,
         io = args.io,
         request = args.request;;
     app.post('/api/events/signup', function (req, res) {
         var eventCollection = db.collection('events'),
-            uid = parseInt(req.body.uid);
+            uid = parseInt(req.body.uid),
+            BSON = mongodb.BSONPure;
         
         eventCollection.findAndModify({
-            id: parseInt(req.body.event_id)
+            _id: BSON.ObjectID(req.body.event_id)
         }, [], {
             $addToSet: {
                 signups: {

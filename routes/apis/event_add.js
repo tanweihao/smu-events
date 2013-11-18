@@ -11,13 +11,11 @@ module.exports = function(args) {
             if (!err) {
                 eventCollection.count(function(err, docs) {
                     if (!err) {
-                        var id = docs + 1,
-                            start_date = new Date(req.body.start_date);
+                        var start_date = new Date(req.body.start_date);
                         start_date.setHours(start_date.getHours()+5);
                         var dateStr = start_date.getDate() +""+ (start_date.getMonth()+1) + start_date.getFullYear() + start_date.getHours();
                         
                         eventCollection.insert({
-                            id: id,
                             event_name: req.body.event_name,
                             org_name: user.username,
                             org_id: req.body.org_id,
@@ -42,7 +40,7 @@ module.exports = function(args) {
                         }, function(err, event) {
                             if (!err) {
                                 res.json({
-                                    id: id
+                                    id: event._id
                                 });
                             }
                         })

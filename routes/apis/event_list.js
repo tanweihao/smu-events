@@ -20,7 +20,7 @@ module.exports = function (args) {
         if (_get.past_events) {
             query.signups = {
                 $elemMatch: {
-                    id: parseInt(_get.past_events)
+                    uid: parseInt(_get.past_events)
                 }
             };
             query.start_date = {
@@ -30,7 +30,7 @@ module.exports = function (args) {
         if (_get.future_events) {
             query.signups = {
                 $elemMatch: {
-                    id: parseInt(_get.future_events)
+                    uid: parseInt(_get.future_events)
                 }
             };
             query.start_date = {
@@ -40,6 +40,7 @@ module.exports = function (args) {
         
         eventCollection.find(query, options).toArray(function(err, events) {
             if (!err) {
+                //Run through events list and include attendance if UID is specified
                 var uid = parseInt(_get.uid);
                 events.forEach(function(event) {
                     if (_get.uid) {

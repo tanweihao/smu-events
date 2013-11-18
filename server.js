@@ -42,6 +42,7 @@ MongoClient.connect(connection_string, function (err, db) {
             userHash: userHash,
             passwordHash: passwordHash,
             fs: fs,
+            mongodb: mongodb,
             db: db,
             io: io,
             rootDir: rootDir,

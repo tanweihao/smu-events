@@ -59,9 +59,10 @@ module.exports = function (args) {
 function searchUid(event, uid) {
     for (var i = 0; i < event.signups.length; i++) {
         if (event.signups[i].uid === uid) {
-            event.status = true;
+            event.signed_up = true;
+            event.registered = event.signups[i].registered
             return;
         }
     }
-    event.status = false;
+    event.signed_up = false;
 }

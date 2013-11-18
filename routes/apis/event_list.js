@@ -9,10 +9,7 @@ module.exports = function (args) {
         // Building of the search query
         var query = {},
             options = {
-                limit: 10,
-                fields: {
-                    _id: 0
-                }
+                limit: 10
             };
         
         (_get.page) ? (options.skip = _get.page * 10) : 0;
@@ -41,9 +38,12 @@ module.exports = function (args) {
         eventCollection.find(query, options).toArray(function(err, events) {
             if (!err) {
                 //Run through events list and include attendance if UID is specified
-                var uid = parseInt(_get.uid);
+                var uid;
+                (_get.uid) ? (uid = parseInt(_get.uid)) : "";
+                (_get.past_events) ? (uid = parseInt(_get.past_events)) : "";
+                (_get.future_events) ? (uid = parseInt(_get.future_events)) : "";
                 events.forEach(function(event) {
-                    if (_get.uid) {
+                    if (_get.uid || _get.past_events || _get.future_events) {
                         searchUid(event, uid);
                     }
                     delete event.signups;

@@ -1,5 +1,6 @@
 module.exports = function(args) {
     var app = args.app,
+        moment = args.moment,
         db = args.db;
     app.post('/api/events/add_event', function(req, res) {
         var userCollection = db.collection('users'),
@@ -9,15 +10,14 @@ module.exports = function(args) {
             id: req.body.org_id
         }, function(err, user) {
             if (!err) {
-                var start_date = new Date(req.body.start_date);
-                start_date.setHours(start_date.getHours()+5);
-                var dateStr = start_date.getDate() +""+ (start_date.getMonth()+1) + start_date.getFullYear() + start_date.getHours();
+                var timeNow = moment(req.body.start_date),
+                    dateStr = timeNow.format("DDMMYYYYHH");
                 
                 eventCollection.insert({
                     event_name: req.body.event_name,
                     org_name: user.username,
                     org_id: req.body.org_id,
-                    start_date: start_date,
+                    start_date: new Date(req.body.start_date),
                     end_date: new Date(req.body.end_date),
                     venue: req.body.venue,
                     description: req.body.description,

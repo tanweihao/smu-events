@@ -1,11 +1,11 @@
 module.exports = function(args) {
-    var db = args.db;
+    var db = args.db,
+        moment = args.moment;
     
     //Populating the event list
     var eventCollection = db.collection('events'),
-        date = new Date();
-    date.setHours(date.getHours()+13);
-    var dateStr = date.getDate() +""+ (date.getMonth()+1) + date.getFullYear() + date.getHours();
+        timeNow = moment().zone("+0800");
+    var dateStr = timeNow.format("DDMMYYYYHH");
     args.eventList[dateStr] = [];
     
     eventCollection.find({

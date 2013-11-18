@@ -1,11 +1,10 @@
 module.exports = function(args) {
     var db = args.db,
+        moment = args.moment,
         request = args.request;
     
-    var date = new Date(),
-        eventCollection = db.collection('events');
-    date.setHours(date.getHours()+13);
-    var dateStr = date.getDate() +""+ (date.getMonth()+1) + date.getFullYear() + date.getHours();
+    var timeNow = moment().zone("+0800"),
+        dateStr = timeNow.format("DDMMYYYYHH");
     
     //Looping through the event list
     setInterval(function() {

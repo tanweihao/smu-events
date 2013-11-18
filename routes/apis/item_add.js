@@ -10,6 +10,7 @@ module.exports = function(args) {
             name: req.body.name,
             description: req.body.description,
             location: req.body.location,
+            loc_code: req.body.loc_code,
             status: false,
             comments: []
         }, function(err, item) {

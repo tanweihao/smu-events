@@ -12,7 +12,7 @@ module.exports = function (args) {
                     id: id,
                     username: req.body.username,
                     password: req.body.password,
-                    role: "org"
+                    role: req.body.role
                 }, function(err, user) {
                     if (!err) {
                         res.json({

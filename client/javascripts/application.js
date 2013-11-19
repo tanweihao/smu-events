@@ -34489,7 +34489,7 @@ plots, you can just fix the size of their placeholders.
                     	createCookie("orgId",json.id,3);
                     	window.location.replace("fullcalendar.html");
                     }
-                    if(json.role == "TA"){
+                    if(json.role == "ta"){
                     	createCookie("taId",json.id,3);
                     	window.location.replace("attendance.html");
                     }

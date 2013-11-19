@@ -23,7 +23,8 @@ module.exports = function(args) {
                     form: {
                         loc: "{'loc':[{'type':12, 'id':[{'floor':"+parseInt(req.body.loc_code)+"}]}]}",
                         expiry: 1,
-                        content: '{"type":2, "id":"'+item._id+', "name":"'+item.name+', "location":"'+item.location+', "description":"'+item.description+'"}',
+                        content: '{"type":2, "id":"'+item._id+', "name":"'+item.name+', "location":"'+item.location
+                                 +', "description":"'+item.description+', "uid":"'+item.uid+'"}',
                         appid: "176110"
                     },
                     jar: true

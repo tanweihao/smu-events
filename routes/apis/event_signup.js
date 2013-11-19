@@ -15,7 +15,9 @@ module.exports = function (args) {
             $addToSet: {
                 signups: {
                     uid: uid,
+                    name: req.body.name,
                     email: req.body.email,
+                    emailHash: req.body.emailHash,
                     registered: false
                 }
             }

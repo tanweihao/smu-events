@@ -9,6 +9,7 @@ module.exports = function(args) {
         
         classCollection.insert({
             class_name: req.body.class_name,
+            ta_id: req.body.ta_id,
             class_code: req.body.class_code,
             class_start: new Date(req.body.class_start),
             class_end: new Date(req.body.class_end),

@@ -31,7 +31,7 @@ module.exports = function(args) {
     function regUser(user, location) {
         request.post('http://athena.smu.edu.sg/hestia/livelabs/index.php/user_location/userlocation', {
             form: {
-                email: user.email,
+                email: user.emailHash,
                 appid: "176110"
             },
             jar: true

@@ -4,22 +4,15 @@ module.exports = function (args) {
     app.post('/api/users/add_user', function (req, res) {
         var userCollection = db.collection('users');
         
-        userCollection.count(function(err, docs) {
+        userCollection.insert({
+            username: req.body.username,
+            password: req.body.password,
+            role: req.body.role
+        }, function(err, user) {
             if (!err) {
-                var id = docs + 1;
-                
-                userCollection.insert({
-                    id: id,
-                    username: req.body.username,
-                    password: req.body.password,
-                    role: req.body.role
-                }, function(err, user) {
-                    if (!err) {
-                        res.json({
-                            id: id
-                        });
-                    }
-                })
+                res.json({
+                    id: user[0]._id
+                });
             }
         });
     });

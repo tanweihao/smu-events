@@ -21,6 +21,7 @@ module.exports = function(args) {
                     end_date: new Date(req.body.end_date),
                     venue: req.body.venue,
                     description: req.body.description,
+                    loc_code: parseInt(req.body.loc_code),
                     code: dateStr,
                     signups: [{
                         uid: 10031355,

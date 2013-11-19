@@ -1,7 +1,7 @@
 module.exports = function (args) {
     var app = args.app,
         db = args.db;
-    app.post('/api/users/add_organizer', function (req, res) {
+    app.post('/api/users/add_user', function (req, res) {
         var userCollection = db.collection('users');
         
         userCollection.count(function(err, docs) {

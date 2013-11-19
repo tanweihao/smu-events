@@ -3,7 +3,6 @@ module.exports = function (args) {
         moment = args.moment,
         mongodb = args.mongodb,
         db = args.db,
-        io = args.io,
         request = args.request;
         
     app.post('/api/item/comment', function (req, res) {
@@ -26,6 +25,18 @@ module.exports = function (args) {
             new: true
         }, function(err, item) {
             if (!err && item != null) {
+                request.post('http://athena.smu.edu.sg/hestia/livelabs/index.php/broadcast/ping_others', {
+                    form: {
+                        to: "{'to':[{'id':"+item.uid+"}]}",
+                        loc: "{'loc':[{'type':10}]}",
+                        expiry: 336,
+                        content: '{"type":3, "id":"'+item._id+'"}',
+                        appid: "176110"
+                    },
+                    jar: true
+                }, function(error, res, data) {
+                    console.log(data);
+                });
                 res.json({
                     status: "success"
                 });

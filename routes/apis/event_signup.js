@@ -3,7 +3,7 @@ module.exports = function (args) {
         mongodb = args.mongodb,
         db = args.db,
         io = args.io,
-        request = args.request;;
+        request = args.request;
     app.post('/api/events/signup', function (req, res) {
         var eventCollection = db.collection('events'),
             uid = parseInt(req.body.uid),

@@ -1,17 +1,28 @@
 module.exports = function(args) {
-    var db = args.db,
-        moment = args.moment,
+    var moment = args.moment,
         request = args.request;
     
     var timeNow = moment().zone("+0800"),
-        dateStr = timeNow.format("DDMMYYYYHH");
+        eventDateStr = timeNow.format("DDMMYYYYHH"),
+        classDateStr = timeNow.format("dddHH");
     
     //Looping through the event list
     setInterval(function() {
-        args.eventList[dateStr].forEach(function(event) {
+        args.eventList[eventDateStr].forEach(function(event) {
             event.signups.forEach(function(user) {
                 if (!user.registered) {
                     regUser(user, event.location);
+                }
+            });
+        });
+    }, 5000);
+    
+    //Looping through the class list
+    setInterval(function() {
+        args.classList[classDateStr].forEach(function(cls) {
+            cls.students.forEach(function(student) {
+                if (!student.registered) {
+                    
                 }
             });
         });

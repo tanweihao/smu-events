@@ -48,7 +48,8 @@ MongoClient.connect(connection_string, function (err, db) {
             db: db,
             io: io,
             rootDir: rootDir,
-            eventList: {}
+            eventList: {},
+            classList: {}
         };
         
         //Logging into Livelabs API

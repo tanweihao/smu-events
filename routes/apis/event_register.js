@@ -8,7 +8,7 @@ module.exports = function (args) {
         
         eventCollection.findAndModify({
             _id: BSON.ObjectID(req.body.event_id),
-            "signups.id": parseInt(req.body.uid)
+            "signups.uid": parseInt(req.body.uid)
         }, [], {
             $set: {
                 "signups.$.registered": true

@@ -25,7 +25,7 @@ module.exports = function (args) {
         //Ignore status parameter if retrieving by user or item ID
         (_get.uid) ? (delete query.status) : "";
         (_get._id) ? (delete query.status) : "";
-        itemCollection.find(query, options).toArray(function(err, items) {
+        itemCollection.find(query, options).sort({date: 1}).toArray(function(err, items) {
             if (!err) {
                 res.json(
                     items

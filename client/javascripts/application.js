@@ -34519,9 +34519,16 @@ plots, you can just fix the size of their placeholders.
       this.registerSubmit.click(function(e) {
       	var username = $('input[name="register-username"]').val();
         var password = $('input[name="register-password"]').val();
-        var confirmPassword = $('input[name="register-confirmPassword"]').val();
+        var confirmPassword = $('input[name="register-confirmPassword"]').val();radios[organizer]
+        var role;
+        if(document.getElementById('rd1').checked) {
+            role = "org";
+        }else if(document.getElementById('rd2').checked) {
+            role = "ta";
+        }
         console.log(password);
         console.log(confirmPassword);
+        console.log(role);
         if(password !== confirmPassword){
             Notifications.push({
                 text: "<i class='icon-warning-sign'></i> Error: Passwords don't match. Please try again.",
@@ -34529,7 +34536,7 @@ plots, you can just fix the size of their placeholders.
                 "class": "error"
             });
         }else{
-            var registerData = '{"username":"'+username+'","password":"'+password+'"}';
+            var registerData = '{"username":"'+username+'","password":"'+password+'","role":"'+role+'"}';
             console.log(registerData);
             $.ajax({
     	        url: "http://smu-events.herokuapp.com/api/users/add_user",

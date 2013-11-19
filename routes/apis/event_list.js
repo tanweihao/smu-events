@@ -36,7 +36,7 @@ module.exports = function (args) {
             };
         }
         
-        eventCollection.find(query, options).toArray(function(err, events) {
+        eventCollection.find(query, options).sort({start_date: 1}).toArray(function(err, events) {
             if (!err) {
                 //Run through events list and include attendance if UID is specified
                 var uid;

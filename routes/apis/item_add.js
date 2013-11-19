@@ -1,9 +1,11 @@
 module.exports = function(args) {
     var app = args.app,
+        moment = args.moment,
         db = args.db,
         request = args.request;
     app.post('/api/item/add_item', function(req, res) {
-        var itemCollection = db.collection('items');
+        var itemCollection = db.collection('items'),
+            timeNow = moment().zone("+0800");
         
         itemCollection.insert({
             uid: parseInt(req.body.uid),
@@ -12,6 +14,7 @@ module.exports = function(args) {
             description: req.body.description,
             location: req.body.location,
             loc_code: parseInt(req.body.loc_code),
+            date: timeNow.format("YYYY-MM-DD HH:mm"),
             status: false,
             comments: []
         }, function(err, item) {

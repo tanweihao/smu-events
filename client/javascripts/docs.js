@@ -178,12 +178,12 @@
     new ConfirmAction($("#fix-stats"));
     new ConfirmAction($("#fix-stats2"));
     new CalendarEvents($('#external-events'));
-    $('.data-table').dataTable({
+    /*$('.data-table').dataTable({
       "bJQueryUI": true,
       "sPaginationType": "full_numbers",
       "sDom": '<""l>t<"F"fp>'
     });
-    
+    */
   });
 
 }).call(this);

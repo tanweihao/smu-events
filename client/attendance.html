@@ -20,11 +20,10 @@
 <div id="modal" class="black-box modal hide fade">
   <div class="modal-header tab-header">
     <button type="button" class="close" data-dismiss="modal">&times;</button>
-    <span>Some modal title</span>
+    <span id="title"></span>
   </div>
   <div class="modal-body separator">
-    <h4>Text in a modal</h4>
-    <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem.</p>
+     
   </div>
   <div class="modal-footer">
     <div class="inner-well">
@@ -138,125 +137,71 @@
   <div class="container-fluid">
     <div class="row-fluid">
   
-  <div class="span12">
-  	<div class="btn-group">
-        <button class="button ">Select Class</button>
+  <div class="span12" style="min-height:500px;">
+  	<div class="btn-group" >
+       <!-- <button class="button" id="selectedClass" style="width:200px;">Select Class</button>
         <button class="button  dropdown-toggle" data-toggle="dropdown">
           <span class="caret"></span>
         </button>
-        <ul class="dropdown-menu">
-          <li><a href="#">Mobile & Pervasive</a></li>
-          <li><a href="#">IS200</a></li>
-          <li><a href="#">IS101</a></li>
-        </ul>
+        <ul class="dropdown-menu" id="classList" style="width:200px;">
+          
+        </ul>-->
+        <select id="classList">
+    		
+  		</select>
       </div>
       <div class="btn-group">
-        <button class="button ">Select Section</button>
+        <!--<button class="button ">Select Week</button>
         <button class="button  dropdown-toggle" data-toggle="dropdown">
           <span class="caret"></span>
         </button>
-        <ul class="dropdown-menu">
-          <li><a href="#">G1</a></li>
-          <li><a href="#">G2</a></li>
-          <li><a href="#">G3</a></li>
-        </ul>
+        <ul class="dropdown-menu" style="overflow-y:scroll;">
+          <li><a href="#">Week 1</a></li>
+          <li><a href="#">Week 2</a></li>
+          <li><a href="#">Week 3</a></li>
+           <li><a href="#">Week 4</a></li>
+          <li><a href="#">Week 5</a></li>
+          <li><a href="#">Week 6</a></li>
+           <li><a href="#">Week 7</a></li>
+          <li><a href="#">Week 8</a></li>
+          <li><a href="#">Week 9</a></li>
+          <li><a href="#">Week 10</a></li>
+          <li><a href="#">Week 11</a></li>
+           <li><a href="#">Week 12</a></li>
+          <li><a href="#">Week 13</a></li>
+        </ul>-->
+       		 <select id="weekList">
+    			 <option value="1" selected="selected">Week 1</option>
+    			 <option value="2">Week 2</option>
+    			 <option value="3">Week 3</option>
+    			 <option value="4">Week 4</option>
+    			 <option value="5">Week 5</option>
+    			 <option value="6">Week 6</option>
+    			 <option value="7">Week 7</option>
+    			 <option value="8">Week 8</option>
+    			 <option value="9">Week 9</option>
+    			 <option value="10">Week 10</option>
+    			 <option value="11">Week 11</option>
+    			 <option value="12">Week 12</option>
+    			 <option value="13">Week 13</option>
+  			</select>
       </div>
       <br/> <br/>
     <div class="box" style="position:relative;">
     
 <div class="tab-header" >
-  Attendance Stats
+  Student List
 </div>
 <table class="table table-striped data-table">
-<thead>
+<!--<thead>
 <tr>
   <th>Name</th>
-  <th>Class</th>
-  <th>Time</th>
   <th>Attendance</th>
+  <th>Class Participation</th>
 </tr>
 </thead>
-<tbody>
-<tr class="gradeX">
-  <td>Student 1</td>
-  <td>Mobile & Pervasive</td>
-  <td>Friday 12:00 pm - 3:30 pm</td>
-  <td class="center">Yes</td>
-</tr>
-<tr class="gradeX">
-  <td>Student 1</td>
-  <td>Mobile & Pervasive</td>
-  <td>Friday 12:00 pm - 3:30 pm</td>
-  <td class="center">Yes</td>
-</tr>
-<tr class="gradeX">
-  <td>Student 1</td>
-  <td>Mobile & Pervasive</td>
-  <td>Friday 12:00 pm - 3:30 pm</td>
-  <td class="center">Yes</td>
-</tr>
-<tr class="gradeX">
-  <td>Student 1</td>
-  <td>Mobile & Pervasive</td>
-  <td>Friday 12:00 pm - 3:30 pm</td>
-  <td class="center">Yes</td>
-</tr>
-<tr class="gradeX">
-  <td>Student 1</td>
-  <td>Mobile & Pervasive</td>
-  <td>Friday 12:00 pm - 3:30 pm</td>
-  <td class="center">Yes</td>
-</tr>
-<tr class="gradeX">
-  <td>Student 1</td>
-  <td>Mobile & Pervasive</td>
-  <td>Friday 12:00 pm - 3:30 pm</td>
-  <td class="center">Yes</td>
-</tr>
-<tr class="gradeX">
-  <td>Student 1</td>
-  <td>Mobile & Pervasive</td>
-  <td>Friday 12:00 pm - 3:30 pm</td>
-  <td class="center">Yes</td>
-</tr>
-<tr class="gradeX">
-  <td>Student 1</td>
-  <td>Mobile & Pervasive</td>
-  <td>Friday 12:00 pm - 3:30 pm</td>
-  <td class="center">Yes</td>
-</tr>
-<tr class="gradeX">
-  <td>Student 1</td>
-  <td>Mobile & Pervasive</td>
-  <td>Friday 12:00 pm - 3:30 pm</td>
-  <td class="center">Yes</td>
-</tr>
-<tr class="gradeX">
-  <td>Student 1</td>
-  <td>Mobile & Pervasive</td>
-  <td>Friday 12:00 pm - 3:30 pm</td>
-  <td class="center">Yes</td>
-</tr>
-<tr class="gradeX">
-  <td>Student 1</td>
-  <td>Mobile & Pervasive</td>
-  <td>Friday 12:00 pm - 3:30 pm</td>
-  <td class="center">Yes</td>
-</tr>
-<tr class="gradeX">
-  <td>Student 1</td>
-  <td>Mobile & Pervasive</td>
-  <td>Friday 12:00 pm - 3:30 pm</td>
-  <td class="center">Yes</td>
-</tr>
-<tr class="gradeX">
-  <td>Student 1</td>
-  <td>Mobile & Pervasive</td>
-  <td>Friday 12:00 pm - 3:30 pm</td>
-  <td class="center">Yes</td>
-</tr>
-
-</tbody>
+<tbody  id="studentList">
+</tbody>-->
 </table>
 </div>
   </div>
@@ -313,6 +258,106 @@
       }else{
           $('.title').text(readCookie("username"));
       }
+      getClassList();
+      var classById ={}; var studentByName = {};var oTable;
+      function getClassList(){
+      		var taId = 'taId='+readCookie("taId");
+      		
+     	 $.ajax({
+    		url: "http://smu-events.herokuapp.com/api/classes/class_list",
+			type: "GET",
+			data:taId,
+			contentType: "application/json",
+    		success:function(json) {
+    			
+    			var sb = [];
+    			$(json).each(function(i,e){
+      				classById[e._id] = e;
+      					$("#classList").empty();
+      					if(i==0){
+      						//$("#selectedClass").text(e.class_code+" - "+e.class_name);
+      						sb.push('<option id="class" oid="'+e._id+'" selected="selected">'+e.class_code+' - '+e.class_name+'</option>');
+      						populateStudentList(e._id,1);
+      					}else{
+      						sb.push('<option id="class" oid="'+e._id+'">'+e.class_code+' - '+e.class_name+'</option>');
+      					}
+      			});
+      			$("#classList").append(sb.join(''));
+      		
+    		}
+   	 	});
+      }
+      
+      function populateStudentList(classId,week){
+      	var sb = [];
+      	
+      	var data = 'taId='+readCookie("taId")+'&class_id='+classId+'&week='+week;
+      			
+      	$.ajax({
+    		url: "http://smu-events.herokuapp.com/api/classes/class_list",
+			type: "GET",
+			data:data,
+			contentType: "application/json",
+    		success:function(json) {
+    			
+    			var locations = [];
+				$(json).each(function(i, obj) {
+					studentByName[obj.name] = obj;
+					if(obj.attendance==1){
+						locations.push([obj.name, "Yes"]);
+					}else if(obj.attendance==0){
+						locations.push([obj.name, "No"]);
+					}
+   					
+				});
+    			console.log(locations);
+    			//Delete the datable object first
+				if(oTable != null)oTable.fnDestroy();
+				//Remove all the DOM elements
+				$('.data-table').empty();
+    			oTable = $('.data-table').dataTable( {
+        			"aaData":locations,
+        			"aoColumns": [
+            			{ "sTitle": "Name" },
+           				{ "sTitle": "Attendance" }
+        			],"bJQueryUI": true,
+      				"sPaginationType": "full_numbers",
+      				"sDom": '<""l>t<"F"fp>'
+   				});   
+    			/*$(json).each(function(i,e){
+    				studentById[i] = e;
+    				$("#studentList").empty();
+      				sb.push('<tr class="gradeX" id="student" oid="'+i+'"><td>'+e.name+'</td><td>'+(e.attendance==1?"Yes":"No")+'</td><td>'+e.email+'</td></tr>');
+    			});
+    			$("#studentList").append(sb.join(''));*/
+    		}
+   	 	});
+      }
+      
+      $( "#classList" ).change(function() {
+  		populateStudentList($("#classList option:selected").attr('oid'),$("#weekList option:selected").val());
+	  });
+	  
+	  $( "#weekList" ).change(function() {
+  		populateStudentList($("#classList option:selected").attr('oid'),$("#weekList option:selected").val());
+	  });
+      
+      $(".data-table tbody tr").live("click", function(event){
+    	var position = oTable.fnGetPosition(this); // getting the clicked row position
+    	var name = oTable.fnGetData(position)[0];    // getting the value of the first (invisible) column
+    	console.log(position+" "+name);
+    	editStudent(studentByName[name]);
+    	
+      });
+      
+      function editStudent(student){
+      	$("#title").empty();
+      	$(".modal-body").empty();
+      	$("#title").append("<h5>Update Student ["+student.name+"] </h5>");
+      	$(".modal-body").append("<ul><li>Student Name: "+student.name+"</li><li>Student's attendance: "+student.attendance+"</li></ul>");
+      	$("#modal").modal('show');
+      }
+      
 </script>
 
 </body>

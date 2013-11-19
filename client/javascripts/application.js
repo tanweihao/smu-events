@@ -34519,7 +34519,7 @@ plots, you can just fix the size of their placeholders.
       this.registerSubmit.click(function(e) {
       	var username = $('input[name="register-username"]').val();
         var password = $('input[name="register-password"]').val();
-        var confirmPassword = $('input[name="register-confirmPassword"]').val();radios[organizer]
+        var confirmPassword = $('input[name="register-confirmPassword"]').val();
         var role;
         if(document.getElementById('rd1').checked) {
             role = "org";

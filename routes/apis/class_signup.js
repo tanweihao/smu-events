@@ -7,7 +7,7 @@ module.exports = function (args) {
             BSON = mongodb.BSONPure;
         
         req.body.students.forEach(function(student) {
-            student.attendance = [0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+            student.attendance = "00000000000000"
         });
         
         classCollection.findAndModify({

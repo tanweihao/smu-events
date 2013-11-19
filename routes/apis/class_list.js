@@ -23,7 +23,18 @@ module.exports = function (args) {
                     });
                 }
                 if (_get.class_id) {
-                    res.json(classes[0]);
+                    if (!_get.week) {
+                        res.json(classes[0]);
+                    } else {
+                        var students = [];
+                        classes[0].students.forEach(function(student) {
+                            students.push({
+                                name: student.name,
+                                attendance: student.attendance.charAt(parseInt(_get.week)-1)
+                            });
+                        });
+                        res.json(students);
+                    }
                 } else {
                     res.json(classes);
                 }

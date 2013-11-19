@@ -4,26 +4,45 @@ module.exports = function (args) {
         db = args.db;
     app.post('/api/classes/update', function (req, res) {
         var classCollection = db.collection('classes'),
-            BSON = mongodb.BSONPure;
+            BSON = mongodb.BSONPure,
+            week = parseInt(req.body.week),
+            attendance = "";
         
-        classCollection.findAndModify({
-            _id: BSON.ObjectID(req.body.class_id),
-            "students.uid": parseInt(req.body.uid)
-        }, [], {
-            $set: {
-                "students.$.registered": true
-            }
-        }, {
-            new: true
-        }, function(err, item) {
-            if (!err && item != null) {
-                res.json({
-                    status: "success"
+        classCollection.findOne({
+            _id: BSON.ObjectID(req.body.class_id)
+        }, function(err, cls) {
+            if (!err) {
+                cls.students.forEach(function(student) {
+                    if (student.uid == parseInt(req.body.uid)) {
+                        attendance = student.attendance;
+                    }
+                });
+                
+                attendance = attendance.replaceAt(week-1, req.body.attendance);
+                classCollection.findAndModify({
+                    _id: BSON.ObjectID(req.body.class_id),
+                    "students.uid": parseInt(req.body.uid)
+                }, [], {
+                    $set: {
+                        "students.$.attendance": attendance
+                    }
+                }, {
+                    new: true
+                }, function(err, cls) {
+                    if (!err && cls != null) {
+                        res.json({
+                            status: "success"
+                        });
+                    }
+                    res.json({
+                        status: "fail"
+                    });
                 });
             }
-            res.json({
-                status: "fail"
-            });
         });
     });
+}
+
+String.prototype.replaceAt=function(index, character) {
+    return this.substr(0, index) + character + this.substr(index+character.length);
 }

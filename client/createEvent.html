@@ -220,14 +220,7 @@
 				</select>
 				-->
               </div>
-              <div class="fileupload-preview">
-              		<img class="preview" src="" style="width:200px;height:200px;"/>
-              </div>
-				<div class="fileupload fileupload-new" data-provides="fileupload">
-  <span class="btn btn-file"><span class="fileupload-new"></span><span class="fileupload-exists"></span><input type="file" name="file"/></span>
-  <span class="fileupload-preview"></span>
-  <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none"></a>
-</div>
+             
             </div>
           </div>
 
@@ -349,7 +342,7 @@
       	  
       
       	  var eventName = $('input[name="eventName"]').val();
-      	  var eventDescription = $('input[name="eventDescription"]').val();
+      	  var eventDescription =  $('#textarea').val();
       	 
       	  var startDate = $('input[name="startDate"]').val();
       	  var startTime = $('input[name="startTime"]').val();
@@ -371,7 +364,7 @@
       	  var loc_code = $( "select#room option:selected").val();
       	  var venue = faculty + " " + room;
       	  
-      	  var image = $('input[name="file"]').val();
+      	  //var image = $('input[name="file"]').val();
       	  
       	 
    			var element = $('input[name="eventName"]');
@@ -388,8 +381,8 @@
 			
 			
       	  //console.log(eventName+" "+eventDescription+" "+startDateTime+" "+endDateTime+" "+faculty+"/"+room+" "+image);
-      	  var eventData = '{"event_name":"'+eventName+'","org_name":"'+readCookie("username")+'","org_id":'+readCookie("orgId")+',"start_date":"'+startDateTime+'","end_date":"'+endDateTime+'","venue":"'+venue+'","description":"'+eventDescription+'","loc_code":'+loc_code+'}';
-      	  console.log(startDate + " " + endDate);
+      	  var eventData = '{"event_name":"'+eventName+'","org_name":"'+readCookie("username")+'","org_id":"'+readCookie("orgId")+'","start_date":"'+startDateTime+'","end_date":"'+endDateTime+'","venue":"'+venue+'","description":"'+eventDescription+'","loc_code":'+loc_code+'}';
+      	  //var eventData = '{"event_name":"'+eventName+'","org_name":"'+readCookie("username")+'","org_id":"'+readCookie("orgId")+'","start_date":"2014-05-15T15:00","end_date":"2014-05-15T15:00","venue":"'+venue+'","description":"'+eventDescription+'","loc_code":'+loc_code+'}';
       	  console.log(eventData);
       	  if(isValid){
       	 $.ajax({
@@ -432,22 +425,7 @@
         }
       });
       
-      function readURL(input) {
-
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function (e) {
-            $('.preview').attr('src', e.target.result);
-        }
-
-        reader.readAsDataURL(input.files[0]);
-    }
-}
-
-$('input[name="file"]').change(function(){
-    readURL(this);
-});
+      
 </script>
 
 </body>

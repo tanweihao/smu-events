@@ -396,7 +396,7 @@ body { padding-top:0px; }
 }(jQuery));
  	
  	function editEvent(event){
- 		event.signups =[];
+ 		/*event.signups =[];
  		event.signups.push(
  		
         {
@@ -464,7 +464,7 @@ body { padding-top:0px; }
             "registered": false
         }
     
- 		);
+ 		);*/
  		console.log(event);
       	var sb = [];var isValid = true;
       	$("#title").empty();
@@ -482,15 +482,20 @@ body { padding-top:0px; }
     	sb.push('<div class="input"> <select id="faculty" style="margin-right:3px;"><option>SIS</option><option disabled>SOE</option><option disabled>SOA</option><option disabled>SOL</option></select><select id="room"><option value="7">SR 2.1</option><option value="8">SR 2.2</option><option value="9">SR 2.3</option><option value="10">SR 2.4</option><option value="14">SR 3.1</option><option value="15">SR 3.2</option><option value="16">SR 3.3</option><option value="17">SR 3.4</option></select></div></div>');
     	sb.push('<div class="box padded" style="background: none;"><div id="stats" style="width: 100%; height: 250px;"></div></div></div>');
     	sb.push('<div class="" style="width:30%;float:right;">');
-    	sb.push('<div class="container" style="width:100%;"><div class="row"> <div class="panel panel-default widget"><div class="panel-heading"> <span class="glyphicon glyphicon-group"></span><h3 class="panel-title">Signups</h3><span class="label label-info" style="float:left;">'+event.signups.length+'</span> </div>');
+    	sb.push('<div class="container" style="width:100%;"><div class="row"> <div class="panel panel-default widget"><div class="panel-heading"> <span class="glyphicon glyphicon-group"></span><h3 class="panel-title">Signups</h3><span class="label label-info" style="float:left;">'+event.signupCount+'</span> </div>');
     	sb.push('<div class="panel-body"><ul class="list-group">');
-    	$(event.signups).each(function(i,e){
+    	if(event.signupCount>0){
+    		$(event.signups).each(function(i,e){
     		   	sb.push('<li class="list-group-item" style="width:100%;margin-bottom:5px;"><div class="row" style="width:100%;"><div style="width:20%;margin-left:7%;float:left;">');
     			sb.push('<img src="images/avatar.png" class="img-circle img-responsive" alt="" /></div>');
-				sb.push('<div style="width:70%;float:left;"><div>'+e.uid);
+				sb.push('<div style="width:70%;float:left;"><div>'+e.name);
     			sb.push('<div class="comment-text">'+e.email+'</div></div>');
-   				sb.push(' <div class="comment-text">'+e.registered+'</div> </div> </div></li>');
-    	});
+   				sb.push(' <div class="comment-text">'+(e.registered?"Registered":"Not registered")+'</div> </div> </div></li>');
+    		});
+    	}else{
+    		sb.push('<li class="list-group-item" style="width:100%;margin-bottom:5px;"><div class="row" style="width:100%;"><div style="width:20%;margin-left:7%;float:left;">No signup.');
+   			sb.push('</div> </div> </div></li>');
+    	}
     	sb.push('</ul></div>');
     	sb.push('</div></div></div></div>');
     	sb.push('</div>');
@@ -550,7 +555,7 @@ body { padding-top:0px; }
 		    data: eventData,
 		    error:function(){
 		            Notifications.push({
-                        text: "<i class='icon-warning-sign'></i>Error : Cannot create event. Please try again.",
+                        text: "<i class='icon-warning-sign'></i>Error : Cannot update event["+eventName+"]. Please try again.",
                         autoDismiss: 3,
                         "class": "error"
                     });
@@ -559,13 +564,13 @@ body { padding-top:0px; }
     	        console.log(json);
     	        if(json.result==-1){
     	            Notifications.push({
-                        text: "<i class='icon-warning-sign'></i>Error : Invalid event. Please try again.",
+                        text: "<i class='icon-warning-sign'></i>Error : Error updating the event ["+eventName+"]. Please try again.",
                         autoDismiss: 3,
                         "class": "error"
                     });
     	        }else{
     	            Notifications.push({
-                        text: "<i class='icon-success-sign'></i> Successfully created event!",
+                        text: "<i class='icon-success-sign'></i> Successfully updated event["+eventName+"]!",
                         autoDismiss: 3,
                         "class": "success"
                     });
@@ -578,7 +583,7 @@ body { padding-top:0px; }
         });
         }else{
         	Notifications.push({
-                        text: "<i class='icon-warning-sign'></i>Error : Cannot create event. Please try again.",
+                        text: "<i class='icon-warning-sign'></i>Error : Please enter valid values for the event["+eventName+"].",
                         autoDismiss: 3,
                         "class": "error"
                     });

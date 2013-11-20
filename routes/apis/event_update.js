@@ -17,7 +17,8 @@ module.exports = function (args) {
                 dateStr = timeNow.format("DDMMYYYYHH");
             event.start_date = new Date(req.body.start_date);
             event.code = dateStr;
-        } else if (req.body.end_date) {
+        }
+        if (req.body.end_date) {
             var timeNow = moment(req.body.end_date),
                 dateStr = timeNow.format("DDMMYYYYHH");
             event.end_date = new Date(req.body.end_date);

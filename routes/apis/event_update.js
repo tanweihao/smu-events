@@ -25,7 +25,7 @@ module.exports = function (args) {
         }
         
         eventCollection.findAndModify({
-            _id: BSON.ObjectID(req.body._id)
+            _id: BSON.ObjectID(req.body.event_id)
         }, [], {
             $set: event
         }, {

@@ -254,7 +254,7 @@ body { padding-top:0px; }
     	    
     		 //populate events calendar
     		for (var i = 0; i < json.length; i++) {
-        		jsonEvents.push({title: json[i].event_name, start: json[i].start_date});
+        		jsonEvents.push({title: json[i].event_name, start: json[i].start_date, allDay: false ,backgroundColor:"#"+Math.floor(Math.random()*16777215).toString(16)});
     		}
     		if(json.length==0){
     		    $("#eventsList").empty();
@@ -472,15 +472,15 @@ body { padding-top:0px; }
       	$("#title").append("<h5>Edit Event ["+event.event_name+"] </h5>");
       	//<input type="button" value="-" class="qtyminus" field="quantity" /><input type="text" name="quantity" value="0" class="qty" /><input type="button" value="+" class="qtyplus" field="quantity" />
       	
-		sb.push('<div class="" style="width:100%;">');
-    	sb.push('<div class="" style="width:70%;float:left;">');
+		sb.push('<div class="" style="width:100%;left:5%;right:5%;">');
+    	sb.push('<div class="" style="width:60%;float:left;">');
     	sb.push('<div class=""><div class="input"><input name="eventName" type="text" placeholder="Event Name" style="width:70%;" value="'+event.event_name+'"/></div>');
     	sb.push('<div class="input"><textarea id="textarea" name="eventDescription" placeholder="Event Description" rows="4" style="width:70%;" maxlength="160">'+event.description+'</textarea></div>');
     	//sb.push('<div class="input" style="margin-bottom:20px;"><span style="width:65%;float:left;"></span><span id="textarea_feedback" style="width:35%;float:right;"> </span></div>');
     	sb.push('<div class="input"><input name="startDate" id="datetimepicker" type="text" class="span3 fill-up" value="Start Date"> <input name="startTime" id="timepicker" type="text" class="span3 fill-up" value="Start Time"></div>');
     	sb.push('<div class="input"><input name="endDate" id="datetimepicker1" type="text" class="span3 fill-up" value="End Date"> <input name="endTime" id="timepicker1" type="text" class="span3 fill-up" value="End Time"></div>');
     	sb.push('<div class="input"> <select id="faculty" style="margin-right:3px;"><option>SIS</option><option disabled>SOE</option><option disabled>SOA</option><option disabled>SOL</option></select><select id="room"><option value="7">SR 2.1</option><option value="8">SR 2.2</option><option value="9">SR 2.3</option><option value="10">SR 2.4</option><option value="14">SR 3.1</option><option value="15">SR 3.2</option><option value="16">SR 3.3</option><option value="17">SR 3.4</option></select></div></div>');
-    	sb.push('<div class="box padded" style="background: none;"><div id="stats" style="width: 68%; height: 250px;"></div></div></div>');
+    	sb.push('<div class="box padded" style="background: none;"><div id="stats" style="width: 100%; height: 250px;"></div></div></div>');
     	sb.push('<div class="" style="width:30%;float:right;">');
     	sb.push('<div class="container" style="width:100%;"><div class="row"> <div class="panel panel-default widget"><div class="panel-heading"> <span class="glyphicon glyphicon-group"></span><h3 class="panel-title">Signups</h3><span class="label label-info" style="float:left;">'+event.signups.length+'</span> </div>');
     	sb.push('<div class="panel-body"><ul class="list-group">');

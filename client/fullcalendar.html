@@ -474,13 +474,13 @@ body { padding-top:0px; }
       	
 		sb.push('<div class="" style="width:100%;">');
     	sb.push('<div class="" style="width:70%;float:left;">');
-    	sb.push('<div class=""><div class="title"><h3>Event Details</h3></div><div class="input"><input name="eventName" type="text" placeholder="Event Name" style="width:70%;" value="'+event.event_name+'"/></div>');
+    	sb.push('<div class=""><div class="input"><input name="eventName" type="text" placeholder="Event Name" style="width:70%;" value="'+event.event_name+'"/></div>');
     	sb.push('<div class="input"><textarea id="textarea" name="eventDescription" placeholder="Event Description" rows="4" style="width:70%;" maxlength="160">'+event.description+'</textarea></div>');
     	//sb.push('<div class="input" style="margin-bottom:20px;"><span style="width:65%;float:left;"></span><span id="textarea_feedback" style="width:35%;float:right;"> </span></div>');
     	sb.push('<div class="input"><input name="startDate" id="datetimepicker" type="text" class="span3 fill-up" value="Start Date"> <input name="startTime" id="timepicker" type="text" class="span3 fill-up" value="Start Time"></div>');
     	sb.push('<div class="input"><input name="endDate" id="datetimepicker1" type="text" class="span3 fill-up" value="End Date"> <input name="endTime" id="timepicker1" type="text" class="span3 fill-up" value="End Time"></div>');
     	sb.push('<div class="input"> <select id="faculty" style="margin-right:3px;"><option>SIS</option><option disabled>SOE</option><option disabled>SOA</option><option disabled>SOL</option></select><select id="room"><option value="7">SR 2.1</option><option value="8">SR 2.2</option><option value="9">SR 2.3</option><option value="10">SR 2.4</option><option value="14">SR 3.1</option><option value="15">SR 3.2</option><option value="16">SR 3.3</option><option value="17">SR 3.4</option></select></div></div>');
-    	sb.push('<div class="title"><h3>Event Stats</h3></div></div>');
+    	sb.push('<div class="box padded" style="background: none;"><div id="stats" style="width: 68%; height: 250px;"></div></div></div>');
     	sb.push('<div class="" style="width:30%;float:right;">');
     	sb.push('<div class="container" style="width:100%;"><div class="row"> <div class="panel panel-default widget"><div class="panel-heading"> <span class="glyphicon glyphicon-group"></span><h3 class="panel-title">Signups</h3><span class="label label-info" style="float:left;">'+event.signups.length+'</span> </div>');
     	sb.push('<div class="panel-body"><ul class="list-group">');
@@ -502,6 +502,52 @@ body { padding-top:0px; }
       	});
       	
       	$("#modal").modal('show');
+      	//chart
+      	if($("#stats").length) {
+        var data = [["SIS", 13], ["SOB", 8], ["SOA", 5], ["SOE", 10]];
+		
+		var ticks = [];
+		for (var i = 0; i < data.length; i++) {
+    		ticks.push([i,data[i][0]]);
+    		data[i][0] = i;   
+		}
+		console.log(data);
+		var data = [
+    		{label: 'SIS', color:'#FFA62F', data: [data[0]]},
+    		{label: 'SOB', color:'#15317E', data: [data[1]]},
+    		{label: 'SOA', color:'#800000', data: [data[2]]},
+    		{label: 'SOE', color:'#151B54', data: [data[3]]}
+		];
+		/*
+		var someOptions = {
+    		     
+		};
+		
+		var aSeries = {
+    		data: data,
+    		bars: {show: true, barWidth: 0.9, align: 'center', color:"'#"+Math.floor(Math.random()*16777215).toString(16)+"'"}
+		};
+		
+		$.plot($("#chart4"), [aSeries], someOptions);
+		*/
+		$.plot($("#stats"), data, {
+   			series: {
+        		stack: 1,
+        		bars: {
+            		show: true,
+            		barWidth: 0.9,
+            		fill:1,
+            		align: 'center'
+        		}
+   			 },
+        	xaxis: {
+        		ticks: ticks
+     		}  
+		});
+    }
+    
+    
+      	//chart
       	$('#datetimepicker').datepicker();
       	$('#datetimepicker').datepicker('setDate', new Date(event.start_date));
     	$('#datetimepicker1').datepicker();

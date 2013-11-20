@@ -28,7 +28,7 @@
   <div class="modal-footer">
     <div class="inner-well">
       <a class="button mini rounded light-gray" data-dismiss="modal">Close</a>
-      <a class="button mini rounded blue">Save changes</a>
+      <a class="button mini rounded blue" id="save">Save changes</a>
     </div>
   </div>
 </div>
@@ -259,7 +259,7 @@
           $('.title').text(readCookie("username"));
       }
       getClassList();
-      var classById ={}; var studentByName = {};var oTable;
+      var classById ={}; var studentById = {};var oTable;
       function getClassList(){
       		var taId = 'taId='+readCookie("taId");
       		
@@ -292,7 +292,7 @@
       	var sb = [];
       	
       	var data = 'taId='+readCookie("taId")+'&class_id='+classId+'&week='+week;
-      			
+      	
       	$.ajax({
     		url: "http://smu-events.herokuapp.com/api/classes/class_list",
 			type: "GET",
@@ -302,15 +302,12 @@
     			
     			var locations = [];
 				$(json).each(function(i, obj) {
-					studentByName[obj.name] = obj;
-					if(obj.attendance==1){
-						locations.push([obj.name, "Yes"]);
-					}else if(obj.attendance==0){
-						locations.push([obj.name, "No"]);
-					}
+					studentById[obj.uid] = obj;
+					locations.push([obj.uid,obj.name, (obj.attendance==1?"Yes":"No")]);
    					
 				});
     			console.log(locations);
+    			
     			//Delete the datable object first
 				if(oTable != null)oTable.fnDestroy();
 				//Remove all the DOM elements
@@ -318,12 +315,15 @@
     			oTable = $('.data-table').dataTable( {
         			"aaData":locations,
         			"aoColumns": [
+        				{ "sTitle": "ID" },
             			{ "sTitle": "Name" },
            				{ "sTitle": "Attendance" }
         			],"bJQueryUI": true,
       				"sPaginationType": "full_numbers",
       				"sDom": '<""l>t<"F"fp>'
    				});   
+   				//var bVis = oTable.fnSettings().aoColumns[0].bVisible;
+    			oTable.fnSetColumnVis( 0, false);
     			/*$(json).each(function(i,e){
     				studentById[i] = e;
     				$("#studentList").empty();
@@ -344,17 +344,40 @@
       
       $(".data-table tbody tr").live("click", function(event){
     	var position = oTable.fnGetPosition(this); // getting the clicked row position
-    	var name = oTable.fnGetData(position)[0];    // getting the value of the first (invisible) column
-    	console.log(position+" "+name);
-    	editStudent(studentByName[name]);
+    	var id = oTable.fnGetData(position)[0];    // getting the value of the first (invisible) column
+    	console.log(position+" "+id);
+    	editStudent(studentById[id]);
     	
       });
       
       function editStudent(student){
+      	var sb = [];
       	$("#title").empty();
       	$(".modal-body").empty();
       	$("#title").append("<h5>Update Student ["+student.name+"] </h5>");
-      	$(".modal-body").append("<ul><li>Student Name: "+student.name+"</li><li>Student's attendance: "+student.attendance+"</li></ul>");
+      	//<input type="button" value="-" class="qtyminus" field="quantity" /><input type="text" name="quantity" value="0" class="qty" /><input type="button" value="+" class="qtyplus" field="quantity" />
+      	
+		sb.push('<div class="span4"><div class="row">');
+		sb.push('<div class="span1"><a href="#" class="thumbnail" style="text-decoration:none;"><img src="images/avatar.png"></a></div>');
+    	sb.push('<div class="span3"><p>Student ID: '+student.uid+'</p><p><strong>Student Name: '+student.name+'</strong></p><p>Attendance: '+(student.attendance==1?"Yes":"No")+'</p><p>Class Part: <a id="minus" href="#" style="font-size:18px;margin-right:5px;margin-left:5px;"><i class="icon-minus"></i></a><span id="value" style="min-width:20px;min-height:20px;font-size:18px;">0</span><a id="plus" href="#" style="margin-left:5px;font-size:18px;"><i class="icon-plus"></i></a></p></div></div>');
+    	sb.push('</div></div>');
+      	$(".modal-body").append(sb.join(''));
+      	var valueElement = $('#value');
+    	function incrementValue(e){
+       		valueElement.text(Math.max(parseInt(valueElement.text()) + e.data.increment, 0));
+       		valueElement.css({"min-width":"20px","min-height":"20px"});
+        	return false;
+    	}
+
+    	$('#plus').bind('click', {increment: 1}, incrementValue);
+
+    	$('#minus').bind('click', {increment: -1}, incrementValue);
+      	
+      	$("#save").bind('click', function(e){
+      		e.preventDefault();
+      		console.log(Math.max(parseInt($("#value").text())));
+      	});
+      	
       	$("#modal").modal('show');
       }
       

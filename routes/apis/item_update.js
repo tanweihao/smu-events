@@ -8,8 +8,8 @@ module.exports = function (args) {
         var itemCollection = db.collection('items'),
             BSON = mongodb.BSONPure,
             status = true;
-        
-        (req.body.status == true) ? "" : (status = false);
+        console.log(req.body)
+        (req.body.status == 'true') ? "" : (status = false);
         itemCollection.findAndModify({
             _id: BSON.ObjectID(req.body._id)
         }, [], {

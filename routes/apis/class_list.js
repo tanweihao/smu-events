@@ -18,7 +18,8 @@ module.exports = function (args) {
             if (!err) {
                 if (_get.uid) {
                     classes.forEach(function(cls) {
-                        cls.attendance = searchClass(parseInt(_get.uid), cls.students);
+                        cls.attendance = searchAttendance(parseInt(_get.uid), cls.students);
+                        cls.class_part = searchClassPart(parseInt(_get.uid), cls.students);
                         delete cls.students;
                     });
                 }
@@ -31,7 +32,8 @@ module.exports = function (args) {
                             students.push({
                                 uid:student.uid,
                                 name: student.name,
-                                attendance: student.attendance.charAt(parseInt(_get.week)-1)
+                                attendance: student.attendance.charAt(parseInt(_get.week)-1),
+                                class_part: student.class_part.charAt(parseInt(_get.week)-1)
                             });
                         });
                         res.json(students);
@@ -44,10 +46,18 @@ module.exports = function (args) {
     });
 }
 
-function searchClass(uid, students) {
+function searchAttendance(uid, students) {
     students.forEach(function(student) {
         if (student.uid == uid) {
             return student.attendance;
+        }
+    });
+}
+
+function searchClassPart(uid, students) {
+    students.forEach(function(student) {
+        if (student.uid == uid) {
+            return student.class_part;
         }
     });
 }

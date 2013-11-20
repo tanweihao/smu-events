@@ -7,7 +7,8 @@ module.exports = function (args) {
             BSON = mongodb.BSONPure;
         
         req.body.students.forEach(function(student) {
-            student.attendance = "00000000000000"
+            student.attendance = "00000000000000",
+            student.class_part = "00000000000000"
         });
         
         classCollection.findAndModify({

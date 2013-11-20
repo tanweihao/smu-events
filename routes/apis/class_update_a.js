@@ -2,7 +2,7 @@ module.exports = function (args) {
     var app = args.app,
         mongodb = args.mongodb,
         db = args.db;
-    app.post('/api/classes/update', function (req, res) {
+    app.post('/api/classes/update_a', function (req, res) {
         var classCollection = db.collection('classes'),
             BSON = mongodb.BSONPure,
             week = parseInt(req.body.week),

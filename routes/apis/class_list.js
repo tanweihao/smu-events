@@ -29,6 +29,7 @@ module.exports = function (args) {
                         var students = [];
                         classes[0].students.forEach(function(student) {
                             students.push({
+                                uid:student.uid,
                                 name: student.name,
                                 attendance: student.attendance.charAt(parseInt(_get.week)-1)
                             });

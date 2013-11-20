@@ -466,7 +466,7 @@ body { padding-top:0px; }
     
  		);
  		console.log(event);
-      	var sb = [];
+      	var sb = [];var isValid = true;
       	$("#title").empty();
       	$(".modal-body").empty();
       	$("#title").append("<h5>Edit Event ["+event.event_name+"] </h5>");
@@ -498,7 +498,92 @@ body { padding-top:0px; }
       	
       	$("#save").bind('click', function(e){
       		e.preventDefault();
-      		console.log();
+      
+      	  var eventName = $('input[name="eventName"]').val();
+      	  var eventDescription =  $('#textarea').val();
+      	 
+      	  var startDate = $('input[name="startDate"]').val();
+      	  var startTime = $('input[name="startTime"]').val();
+      	  var splitStart = startDate.split("/",3);
+      	  var TempStartTime = startTime.substring(0,startTime.length-2);
+      	  var splitStartTime = TempStartTime.split(":",2);
+      	  var startDateTime = new Date(splitStart[2], splitStart[0]-1, splitStart[1], splitStartTime[0], splitStartTime[1]);
+      	 
+      	 
+      	  var endDate = $('input[name="endDate"]').val();
+      	  var endTime = $('input[name="endTime"]').val();
+      	  var splitEnd = endDate.split("/",3);
+      	  var TempEndTime = endTime.substring(0,endTime.length-2);
+      	  var splitEndTime = TempEndTime.split(":",2);
+      	  var endDateTime = new Date(splitEnd[2], splitEnd[0]-1, splitEnd[1], splitEndTime[0], splitEndTime[1]);
+      	  
+      	  var faculty = $( "select#faculty option:selected").val();
+      	  var room = $( "select#room option:selected").text();
+      	  var loc_code = $( "select#room option:selected").val();
+      	  var venue = faculty + " " + room;
+      	  
+      	  var image = $('input[name="file"]').val();
+      	  
+      	 
+   			var element = $('input[name="eventName"]');
+   			if (element.val() == "" || element.val() == null || element.val() == undefined) {
+       			isValid = false;
+       			element.addClass('error');
+       			Notifications.push({
+                	text: "<i class='icon-warning-sign'></i> Error: Please enter the title of the event.",
+            		autoDismiss: 3,
+                	"class": "error"
+            	});
+            	//element.removeClass("error");
+   			}
+			
+			
+      	  //console.log(eventName+" "+eventDescription+" "+startDateTime+" "+endDateTime+" "+faculty+"/"+room+" "+image);
+      	  var eventData = '{"event_id":"'+event._id+'","event_name":"'+eventName+'","start_date":"'+startDateTime+'","end_date":"'+endDateTime+'","venue":"'+venue+'","description":"'+eventDescription+'","loc_code":'+loc_code+'}';
+      	  //var eventData = '{"event_name":"'+eventName+'","org_name":"'+readCookie("username")+'","org_id":"'+readCookie("orgId")+'","start_date":"2014-05-15T15:00","end_date":"2014-05-15T15:00","venue":"'+venue+'","description":"'+eventDescription+'","loc_code":'+loc_code+'}';
+      	  console.log(eventData);
+      	  if(isValid){
+      	 $.ajax({
+    	    url: "http://smu-events.herokuapp.com/api/events/update",
+		    type: "POST",
+    		contentType: "application/json",
+		    data: eventData,
+		    error:function(){
+		            Notifications.push({
+                        text: "<i class='icon-warning-sign'></i>Error : Cannot create event. Please try again.",
+                        autoDismiss: 3,
+                        "class": "error"
+                    });
+		    },
+    	    success:function(json) {
+    	        console.log(json);
+    	        if(json.result==-1){
+    	            Notifications.push({
+                        text: "<i class='icon-warning-sign'></i>Error : Invalid event. Please try again.",
+                        autoDismiss: 3,
+                        "class": "error"
+                    });
+    	        }else{
+    	            Notifications.push({
+                        text: "<i class='icon-success-sign'></i> Successfully created event!",
+                        autoDismiss: 3,
+                        "class": "success"
+                    });
+                    $("#modal").modal('hide');
+                    refreshEvents();
+                   //window.location.replace('fullcalendar.html');
+    	        }
+    	        
+    	    }
+        });
+        }else{
+        	Notifications.push({
+                        text: "<i class='icon-warning-sign'></i>Error : Cannot create event. Please try again.",
+                        autoDismiss: 3,
+                        "class": "error"
+                    });
+        }
+      
       	});
       	
       	$("#modal").modal('show');

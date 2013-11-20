@@ -61,7 +61,7 @@ MongoClient.connect(connection_string, function (err, db) {
             },
             jar: true
         }, function(error, res, data) {
-            console.log(data);
+            console.log("LiveLabs login outcome: " + data);
         });
         
         require('./routes/routes')(args);

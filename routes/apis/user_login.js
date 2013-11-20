@@ -10,7 +10,7 @@ module.exports = function (args) {
             if (!err && user != null) {
                 if (user.password == req.body.password) {
                     res.json({
-                        id: user.id,
+                        id: user._id,
                         role: user.role
                     });
                 }

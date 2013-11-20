@@ -1,13 +1,15 @@
 module.exports = function(args) {
     var app = args.app,
+        mongodb = args.mongodb,
         moment = args.moment,
         db = args.db;
     app.post('/api/events/add_event', function(req, res) {
         var userCollection = db.collection('users'),
-            eventCollection = db.collection('events');
+            eventCollection = db.collection('events'),
+            BSON = mongodb.BSONPure;
         
         userCollection.findOne({
-            id: req.body.org_id
+            _id: BSON.ObjectID(req.body.org_id)
         }, function(err, user) {
             if (!err) {
                 var timeNow = moment(req.body.start_date),

@@ -46,6 +46,7 @@ module.exports = function (args) {
                     if (_get.uid || _get.past_events || _get.future_events) {
                         searchUid(event, uid);
                     }
+                    event.signupCount = event.signups.length;
                     delete event.signups;
                 });
                 res.json(

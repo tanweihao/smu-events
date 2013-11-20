@@ -13,7 +13,9 @@ module.exports = function (args) {
         itemCollection.findAndModify({
             _id: BSON.ObjectID(req.body._id)
         }, [], {
-            status: status
+            $set: {
+                status: status
+            }
         }, {
             new: true
         }, function(err, item) {

@@ -63,6 +63,7 @@
       </a>
     </li>
 
+
 <li>
           <a href="index.html">
               <i class="icon-off"></i> Log out
@@ -158,40 +159,51 @@
           <div class="span6">
             <div class="padded">
               <div class="input">
+                <input name="eventName" type="text" placeholder="Event Name" style="width:70%;" onfocus="($(this).removeClass('error'))"/>
                 
-                <input name="eventName" type="text" placeholder="Event Name"/>
               </div>
               <div class="input">
               	
-                <textarea name="eventDescription" type="text" placeholder="Event Description" maxlength="99"/> </textarea>
+                <textarea id="textarea" name="eventDescription" placeholder="Event Description" rows="6" style="width:70%;" maxlength="160"></textarea>
+               
               </div>
-              
+              <div class="input" style="margin-bottom:20px;">
+                 <span style="width:65%;float:left;"></span>
+              	 <span id="textarea_feedback" style="width:35%;float:right;"> </span>
+              </div>
+            
              <div class="input">
 			
               <input name="startDate" id="datetimepicker" type="text" class="span6 fill-up" value="Start Date">
              	
              	  <input name="startTime" id="timepicker" type="text" class="span6 fill-up" value="Start Time">
+             	  
              	</div>
              <div class="input">
 			
               <input name="endDate" id="datetimepicker1" type="text" class="span6 fill-up" value="End Date">
              	
              	 <input name="endTime" id="timepicker1" type="text" class="span6 fill-up" value="End Time">
+             	 
              	</div>
                <div class="input">
                 
                 <!--<input name="venue" type="text" placeholder="Venue"/>-->
                 <select id="faculty">
   					<option>SIS</option>
-  					<option>SOE</option>
-  					<option>SOA</option>
- 					<option>SOE</option>
+  					<option disabled>SOE</option>
+  					<option disabled>SOA</option>
+ 					<option disabled>SOL</option>
 				</select>
 				<select id="room">
-  					<option>SR 2.1</option>
-  					<option>SR 3.1</option>
-  					<option>SR 4.5</option>
- 					<option>SR 5.1</option>
+  					<option value="7">SR 2.1</option>
+  					<option value="8">SR 2.2</option>
+  					<option value="9">SR 2.3</option>
+  					<option value="10">SR 2.4</option>
+  					<option value="14">SR 3.1</option>
+  					<option value="15">SR 3.2</option>
+  					<option value="16">SR 3.3</option>
+  					<option value="17">SR 3.4</option>
 				</select>
 				<!--
 				<select id="faculty">
@@ -294,7 +306,48 @@
           $('.title').text(readCookie("username"));
       }
       
+      var text_max = 160;
+    	$('#textarea_feedback').html(text_max + ' /160');
+
+    	$('#textarea').keyup(function() {
+        var text_length = $('#textarea').val().length;
+        var text_remaining = text_max - text_length;
+		if(text_remaining < 10){
+			$('#textarea_feedback').css({"color":"red"});
+		}else{
+			$('#textarea_feedback').css({"color":"black"});
+		}
+        $('#textarea_feedback').html(text_remaining + ' /160');
+    });
+      var isValid = true;
+      
+       $('input[name="startDate"]').change(function() {
+  		if(new Date($('input[name="startDate"]').val()) < new Date()){
+				isValid = false;
+       			Notifications.push({
+                	text: "<i class='icon-warning-sign'></i> Error: Please select a future start date.",
+            		autoDismiss: 3,
+                	"class": "error"
+            	});
+			}
+      	  
+	  });
+      
+      $('input[name="endDate"]').change(function() {
+  		if(new Date($('input[name="endDate"]').val()) < new Date()){
+				isValid = false;
+       			Notifications.push({
+                	text: "<i class='icon-warning-sign'></i> Error: Please select a future end date.",
+            		autoDismiss: 3,
+                	"class": "error"
+            	});
+			}
+	  });
+      
       $('button[name="saveEvent"]').on("click",function(){
+      		
+      	  
+      
       	  var eventName = $('input[name="eventName"]').val();
       	  var eventDescription = $('input[name="eventDescription"]').val();
       	 
@@ -314,15 +367,32 @@
       	  var endDateTime = new Date(splitEnd[2], splitEnd[0]-1, splitEnd[1], splitEndTime[0], splitEndTime[1]);
       	  
       	  var faculty = $( "select#faculty option:selected").val();
-      	  var room = $( "select#room option:selected").val();
+      	  var room = $( "select#room option:selected").text();
+      	  var loc_code = $( "select#room option:selected").val();
       	  var venue = faculty + " " + room;
       	  
       	  var image = $('input[name="file"]').val();
       	  
-      	  console.log(eventName+" "+eventDescription+" "+startDateTime+" "+endDateTime+" "+faculty+"/"+room+" "+image);
-      	  //var eventData = '{"event_name":"'+eventName+'","org_name":"'+readCookie("username")+'","org_id":'+readCookie("orgId")+',"start_date":"'+startDateTime+'","end_date":"'+endDateTime+'","venue":"'+venue+'","description":"'+eventDescription+'"}';
-          var eventData = '{"event_name":"'+eventName+'","org_id":'+readCookie("orgId")+',"start_date":"'+startDateTime+'","end_date":"'+endDateTime+'","venue":"'+venue+'","description":"'+eventDescription+'"}';      	 
-      	  $.ajax({
+      	 
+   			var element = $('input[name="eventName"]');
+   			if (element.val() == "" || element.val() == null || element.val() == undefined) {
+       			isValid = false;
+       			element.addClass('error');
+       			Notifications.push({
+                	text: "<i class='icon-warning-sign'></i> Error: Please enter the title of the event.",
+            		autoDismiss: 3,
+                	"class": "error"
+            	});
+            	//element.removeClass("error");
+   			}
+			
+			
+      	  //console.log(eventName+" "+eventDescription+" "+startDateTime+" "+endDateTime+" "+faculty+"/"+room+" "+image);
+      	  var eventData = '{"event_name":"'+eventName+'","org_name":"'+readCookie("username")+'","org_id":'+readCookie("orgId")+',"start_date":"'+startDateTime+'","end_date":"'+endDateTime+'","venue":"'+venue+'","description":"'+eventDescription+'","loc_code":'+loc_code+'}';
+      	  console.log(startDate + " " + endDate);
+      	  console.log(eventData);
+      	  if(isValid){
+      	 $.ajax({
     	    url: "http://smu-events.herokuapp.com/api/events/add_event",
 		    type: "POST",
     		contentType: "application/json",
@@ -348,11 +418,18 @@
                         autoDismiss: 3,
                         "class": "success"
                     });
-                  // window.location.replace('fullcalendar.html');
+                   //window.location.replace('fullcalendar.html');
     	        }
     	        
     	    }
         });
+        }else{
+        	Notifications.push({
+                        text: "<i class='icon-warning-sign'></i>Error : Cannot create event. Please try again.",
+                        autoDismiss: 3,
+                        "class": "error"
+                    });
+        }
       });
       
       function readURL(input) {

@@ -13,22 +13,45 @@
 
   <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0">
   <link rel='shortcut icon' href='images/favicon.ico' type='image/x-icon'/ > 
+  <style>
+  .modal {
+left: 30%;
+width: 70%;
+}
+.modal.fade.in {
+top: 35%;
+}
+.modal-body {
+max-height: 600px;
+}
+
+body { padding-top:0px; }
+.widget .panel-body { padding:0px; }
+.widget .list-group { margin-bottom: 0; }
+.widget .panel-title { display:inline }
+.widget .label-info { float: right; }
+.widget li.list-group-item {border-radius: 0;border: 0;border-top: 1px solid #ddd;}
+.widget li.list-group-item:hover { background-color: rgba(86,61,124,.1); }
+.widget .mic-info { color: #666666;font-size: 11px; }
+.widget .action { margin-top:5px; }
+.widget .comment-text { font-size: 12px; }
+.widget .btn-block { border-top-left-radius:0px;border-top-right-radius:0px; }
+  </style>
 </head>
 <body>
 
 <div id="modal" class="black-box modal hide fade">
   <div class="modal-header tab-header">
     <button type="button" class="close" data-dismiss="modal">&times;</button>
-    <span>Some modal title</span>
+    <span id="title"></span>
   </div>
   <div class="modal-body separator">
-    <h4>Text in a modal</h4>
-    <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem.</p>
+     
   </div>
   <div class="modal-footer">
     <div class="inner-well">
       <a class="button mini rounded light-gray" data-dismiss="modal">Close</a>
-      <a class="button mini rounded blue">Save changes</a>
+      <a class="button mini rounded blue" id="save">Save changes</a>
     </div>
   </div>
 </div>
@@ -242,7 +265,7 @@
       					
       					sb.push('<li class="nav-header" id="upcomingEvents">Upcoming events</li>');
       					$(json).each(function(i,e){
-      						eventById[e.id] = e;
+      						eventById[e._id] = e;
       						eventByName[e.event_name] = e;
       						eventNames[i]=e.event_name;
       						//var dateParts = e.start_date.split("/");
@@ -252,7 +275,7 @@
       						var nowDate = new Date();
       						if(eDate > nowDate){
       							checkUpcomingEvents++;
-      							sb.push('<li><a href="#"><div class="thumbnail clearfix">');
+      							sb.push('<li class="event" oid="'+e._id+'"><a href="#"><div class="thumbnail clearfix">');
       							sb.push('<img src="images/gallery/large/img'+(i+1)+'.jpg" alt="ALT NAME" class="pull-left span5 clearfix" style="margin-right:10px;min-height:145px !important;max-height:145px !important;">');
    								//sb.push('<div class="caption"><h3>'+e.event_name+'</h3><h6>'+e.description+'</h6><h6><i class="icon-search"></i>'+e.start_date+'</h6><h6><i class="icon-search"></i>'+e.end_date+'</h6><small><b>ID: </b>'+e.id+'</small> </div></div></a></li>');
       							sb.push('<ul><li><h5 style="padding:0;margin:0;">'+e.event_name+'</h5></li>');
@@ -275,7 +298,7 @@
       						var nowDate = new Date();
       						if(eDate < nowDate){
       							checkPastEvents++;
-      							sb.push('<li><a href="#"><div class="thumbnail clearfix">');
+      							sb.push('<li class="event" oid="'+e._id+'"><a href="#"><div class="thumbnail clearfix">');
       							sb.push('<img src="images/gallery/large/img'+(i+1)+'.jpg" alt="ALT NAME" class="pull-left span5 clearfix" style="margin-right:10px;min-height:145px;max-height:145px !important;">');
    								//sb.push('<div class="caption"><h2>'+e.event_name+'</h2><small><b>ID: </b>'+e.id+'</small> </div></div></a></li>');
    								sb.push('<ul><li><h5 style="padding:0;margin:0;">'+e.event_name+'</h5></li>');
@@ -298,10 +321,15 @@
       					if(checkPastEvents==0){
       						$("#pastEvents").hide();
       					}
+      					
+      					$(".event").bind('click',function(e){
+ 							var eventId = $(this).attr('oid');
+ 							console.log(eventId);
+ 							editEvent(eventById[eventId]);
+ 						});
     		}
-    	}
-    });
-  	$("#calendar").fullCalendar({
+    		
+    		$("#calendar").fullCalendar({
       events : jsonEvents,
       header: {
         left: 'prev,next today',
@@ -322,17 +350,17 @@
         }
       }
     });
-   
+    	}
+    });
+    
     $("#searchEvents").typeahead({
       		source:eventNames,
       		updater:function(a){
-      			console.log(eventByName[a].id);
+      			console.log(eventByName[a]._id);
       		}
       });
       
-      
-
-(function ($) {
+    (function ($) {
   jQuery.expr[':'].Contains = function(a,i,m){
       return (a.textContent || a.innerText || "").toUpperCase().indexOf(m[3].toUpperCase())>=0;
   };
@@ -363,13 +391,131 @@
     listFilter($("#header"), $("#eventsList"));
   });
 }(jQuery));
- 
- 
+ 	
+ 	function editEvent(event){
+ 		event.signups =[];
+ 		event.signups.push(
+ 		
+        {
+            "uid": 10031355,
+            "email": "859ceecbc1131cd1a3256905113ac6ffb8abbb6c",
+            "registered": false
+        },
+        {
+            "uid": 10059946,
+            "email": "69781f0ba56486e50652217ee26473a1c5e62752",
+            "registered": false
+        },{
+            "uid": 10031355,
+            "email": "859ceecbc1131cd1a3256905113ac6ffb8abbb6c",
+            "registered": false
+        },
+        {
+            "uid": 10059946,
+            "email": "69781f0ba56486e50652217ee26473a1c5e62752",
+            "registered": false
+        },{
+            "uid": 10031355,
+            "email": "859ceecbc1131cd1a3256905113ac6ffb8abbb6c",
+            "registered": false
+        },
+        {
+            "uid": 10059946,
+            "email": "69781f0ba56486e50652217ee26473a1c5e62752",
+            "registered": false
+        },{
+            "uid": 10031355,
+            "email": "859ceecbc1131cd1a3256905113ac6ffb8abbb6c",
+            "registered": false
+        },
+        {
+            "uid": 10059946,
+            "email": "69781f0ba56486e50652217ee26473a1c5e62752",
+            "registered": false
+        },{
+            "uid": 10031355,
+            "email": "859ceecbc1131cd1a3256905113ac6ffb8abbb6c",
+            "registered": false
+        },
+        {
+            "uid": 10059946,
+            "email": "69781f0ba56486e50652217ee26473a1c5e62752",
+            "registered": false
+        },{
+            "uid": 10031355,
+            "email": "859ceecbc1131cd1a3256905113ac6ffb8abbb6c",
+            "registered": false
+        },
+        {
+            "uid": 10059946,
+            "email": "69781f0ba56486e50652217ee26473a1c5e62752",
+            "registered": false
+        },{
+            "uid": 10031355,
+            "email": "859ceecbc1131cd1a3256905113ac6ffb8abbb6c",
+            "registered": false
+        },
+        {
+            "uid": 10059946,
+            "email": "69781f0ba56486e50652217ee26473a1c5e62752",
+            "registered": false
+        }
+    
+ 		);
+ 		console.log(event);
+      	var sb = [];
+      	$("#title").empty();
+      	$(".modal-body").empty();
+      	$("#title").append("<h5>Edit Event ["+event.event_name+"] </h5>");
+      	//<input type="button" value="-" class="qtyminus" field="quantity" /><input type="text" name="quantity" value="0" class="qty" /><input type="button" value="+" class="qtyplus" field="quantity" />
+      	
+		sb.push('<div class="" style="width:100%;">');
+    	sb.push('<div class="" style="width:70%;float:left;">');
+    	sb.push('<div class=""><div class="title"><h3>Event Details</h3></div><div class="input"><input name="eventName" type="text" placeholder="Event Name" style="width:70%;" value="'+event.event_name+'"/></div>');
+    	sb.push('<div class="input"><textarea id="textarea" name="eventDescription" placeholder="Event Description" rows="4" style="width:70%;" maxlength="160">'+event.description+'</textarea></div>');
+    	//sb.push('<div class="input" style="margin-bottom:20px;"><span style="width:65%;float:left;"></span><span id="textarea_feedback" style="width:35%;float:right;"> </span></div>');
+    	sb.push('<div class="input"><input name="startDate" id="datetimepicker" type="text" class="span3 fill-up" value="Start Date"> <input name="startTime" id="timepicker" type="text" class="span3 fill-up" value="Start Time"></div>');
+    	sb.push('<div class="input"><input name="endDate" id="datetimepicker1" type="text" class="span3 fill-up" value="End Date"> <input name="endTime" id="timepicker1" type="text" class="span3 fill-up" value="End Time"></div>');
+    	sb.push('<div class="input"> <select id="faculty" style="margin-right:3px;"><option>SIS</option><option disabled>SOE</option><option disabled>SOA</option><option disabled>SOL</option></select><select id="room"><option value="7">SR 2.1</option><option value="8">SR 2.2</option><option value="9">SR 2.3</option><option value="10">SR 2.4</option><option value="14">SR 3.1</option><option value="15">SR 3.2</option><option value="16">SR 3.3</option><option value="17">SR 3.4</option></select></div></div>');
+    	sb.push('<div class="title"><h3>Event Stats</h3></div></div>');
+    	sb.push('<div class="" style="width:30%;float:right;">');
+    	sb.push('<div class="container" style="width:100%;"><div class="row"> <div class="panel panel-default widget"><div class="panel-heading"> <span class="glyphicon glyphicon-group"></span><h3 class="panel-title">Signups</h3><span class="label label-info" style="float:left;">'+event.signups.length+'</span> </div>');
+    	sb.push('<div class="panel-body"><ul class="list-group">');
+    	$(event.signups).each(function(i,e){
+    		   	sb.push('<li class="list-group-item" style="width:100%;margin-bottom:5px;"><div class="row" style="width:100%;"><div style="width:20%;margin-left:7%;float:left;">');
+    			sb.push('<img src="images/avatar.png" class="img-circle img-responsive" alt="" /></div>');
+				sb.push('<div style="width:70%;float:left;"><div>'+e.uid);
+    			sb.push('<div class="comment-text">'+e.email+'</div></div>');
+   				sb.push(' <div class="comment-text">'+e.registered+'</div> </div> </div></li>');
+    	});
+    	sb.push('</ul></div>');
+    	sb.push('</div></div></div></div>');
+    	sb.push('</div>');
+      	$(".modal-body").append(sb.join(''));
+      	
+      	$("#save").bind('click', function(e){
+      		e.preventDefault();
+      		console.log();
+      	});
+      	
+      	$("#modal").modal('show');
+      	$('#datetimepicker').datepicker();
+      	$('#datetimepicker').datepicker('setDate', new Date(event.start_date));
+    	$('#datetimepicker1').datepicker();
+    	$('#datetimepicker1').datepicker('setDate', new Date(event.end_date));
+    	$('#timepicker').timepicker();
+    	$('#timepicker').timepicker('setTime', new Date(event.start_date));
+   	 	$('#timepicker1').timepicker();
+   	 	$('#timepicker1').timepicker('setTime', new Date(event.end_date));
+   	 	$("select#room option").filter(function() {
+   		 	return $(this).text() == event.venue.substring(4,event.venue.length); 
+		}).prop('selected', true);
+		
+      }
+ 	
 
   }
 
- 
-   
 </script>
 
 </body>

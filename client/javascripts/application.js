@@ -33309,7 +33309,7 @@ function HorizontalPositionCache(getElement) {
         function insertAxisLabels() {
             placeholder.find(".tickLabels").remove();
             
-            var html = ['<div class="tickLabels" style="font-size:smaller">'];
+            var html = ['<div class="tickLabels" style="font-size:smaller;">'];
 
             var axes = allAxes();
             for (var j = 0; j < axes.length; ++j) {
@@ -33347,7 +33347,7 @@ function HorizontalPositionCache(getElement) {
 
                     pos.width = axis.labelWidth;
 
-                    var style = ["position:absolute", "text-align:" + align ];
+                    var style = ["position:absolute", "text-align:" + align,"color:#FFFFFF" ];
                     for (var a in pos)
                         style.push(a + ":" + pos[a] + "px")
                     

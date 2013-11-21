@@ -29,7 +29,7 @@ module.exports = function(args) {
                     },
                     jar: true
                 }, function(error, res, data) {
-                    console.log(data);
+                    console.log("Lost item reported notification sent: " + data);
                 });
                 res.json({
                     status: "success"

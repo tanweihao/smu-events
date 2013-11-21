@@ -54,8 +54,8 @@ MongoClient.connect(connection_string, function (err, db) {
         
         io.sockets.on('connection', function (socket) {
             socket.on('identify', function(data) {
-                args.sockets[data.client_name] = data.client_name;
-                args.sockets[event.org_id].emit("signup_notify", {
+                args.sockets[data.client_name] = socket;
+                args.sockets[data.client_name].emit("signup_notify", {
                     test: "test"
                 });
             });

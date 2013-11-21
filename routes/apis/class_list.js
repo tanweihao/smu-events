@@ -47,17 +47,21 @@ module.exports = function (args) {
 }
 
 function searchAttendance(uid, students) {
+    var attendance = "";
     students.forEach(function(student) {
         if (student.uid == uid) {
-            return student.attendance;
+            attendance = student.attendance;
         }
     });
+    return attendance;
 }
 
 function searchClassPart(uid, students) {
+    var class_part = "";
     students.forEach(function(student) {
         if (student.uid == uid) {
-            return student.class_part;
+            class_part = student.class_part;
         }
     });
+    return class_part;
 }

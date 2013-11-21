@@ -17,7 +17,6 @@ module.exports = function (args) {
                         class_part = student.class_part;
                     }
                 });
-                
                 class_part = class_part.replaceAt(week-1, req.body.class_part);
                 classCollection.findAndModify({
                     _id: BSON.ObjectID(req.body.class_id),

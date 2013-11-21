@@ -48,7 +48,9 @@ module.exports = function (args) {
                         searchUid(event, uid);
                     }
                     event.signupCount = event.signups.length;
-                    delete event.signups;
+                    if (!_get.org_id) {
+                        delete event.signups;
+                    }
                 });
                 res.json(
                     events

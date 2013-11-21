@@ -291,7 +291,7 @@
       function populateStudentList(classId,week){
       	var sb = [];
       	
-      	var data = 'class_id='+classId+'&week='+week;
+      	var data = 'class_id="'+classId+'"&week='+week;
       	
       	$.ajax({
     		url: "http://smu-events.herokuapp.com/api/classes/class_list",

@@ -233,7 +233,6 @@ body { padding-top:0px; }
             }
             socket.emit('identify', { client_name: readCookie("orgId") });
         });
-                 
         
         socket.on('signup_notify', function(data) {
             Notifications.push({

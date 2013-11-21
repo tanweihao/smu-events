@@ -25,6 +25,7 @@ module.exports = function (args) {
             new: true
         }, function(err, event) {
             if (!err && event != null) {
+                console.log(event.org_id);
                 if (args.sockets[event.org_id]) {
                     console.log("Sending signup notification to " + event.org_id);
                     args.sockets[event.org_id].emit("signup_notify", {

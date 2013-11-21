@@ -46,11 +46,20 @@ MongoClient.connect(connection_string, function (err, db) {
             fs: fs,
             mongodb: mongodb,
             db: db,
-            io: io,
             rootDir: rootDir,
+            sockets: [],
             eventList: {},
             classList: {}
         };
+        
+        io.sockets.on('connection', function (socket) {
+            socket.on('identify', function(data) {
+                args.sockets[data.client_name] = data.client_name;
+                args.sockets[event.org_id].emit("signup_notify", {
+                    test: "test"
+                });
+            });
+        });
         
         //Logging into Livelabs API
         request.post('http://athena.smu.edu.sg/hestia/livelabs/index.php/authenticate/login_others', {

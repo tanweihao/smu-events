@@ -9,8 +9,12 @@
         <script>
             var socket = io.connect(window.location.hostname);
             
+            socket.on('connect', function(data) {
+                socket.emit('identify', { client_name: 'data' });
+            });
+            
             socket.on('signup_notify', function(data) {
-                console.log(data);
+                console.log(data)
             });
         </script>
     </body>

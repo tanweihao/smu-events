@@ -25,7 +25,7 @@ module.exports = function (args) {
             new: true
         }, function(err, event) {
             if (!err && event != null) {
-                io.sockets.emit(event.org_id, {
+                args.sockets[event.org_id].emit("signup_notify", {
                     user_name: req.body.name,
                     event_name: event.event_name
                 });

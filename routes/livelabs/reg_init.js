@@ -36,7 +36,7 @@ module.exports = function(args) {
                 args.classList[classDateStr].push({
                     id: cls._id,
                     name: cls.class_name,
-                    start_date: cls.start_date,
+                    class_start: cls.class_start,
                     loc_code: cls.loc_code,
                     students: cls.students
                 });

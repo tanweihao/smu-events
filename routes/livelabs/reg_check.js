@@ -32,19 +32,22 @@ module.exports = function(args) {
     setInterval(function() {
         args.classList[classDateStr].forEach(function(cls) {
             var currentTime = moment().zone("+0800"),
-                classTime = moment(cls.start_date).zone("+0800").subtract("hours",8);
+                classTime = moment(cls.class_start).zone("+0800").subtract("hours", 8),
+                week = currentTime.isoWeek() - classTime.isoWeek();
+            classTime.add("weeks", week);
             
             if (classTime.isBefore(currentTime)) {
                 console.log("Class '" +cls.name+ "' has started");
-                console.log(currentTime.isoWeek(), classTime.isoWeek())
+                
                 cls.students.forEach(function(student) {
-                    regStudent(student, cls.loc_code, cls);
+                    regStudent(student, cls.loc_code, cls, week);
                 });
             }
         });
     }, 5000);
     
     function regUser(user, location, eventNow) {
+        //First check the user's location (this function is only called if user not registered)
         request.post('http://athena.smu.edu.sg/hestia/livelabs/index.php/user_location/userlocation', {
             form: {
                 email: user.emailHash,
@@ -58,7 +61,8 @@ module.exports = function(args) {
                 console.log("JSON parse error!");
             }
             
-            console.log("Participant location for " +user.name+ ": " + data.section)
+            console.log("Participant location for " +user.name+ ": " + data.section);
+            //Check if user is at the event location
             if (data.section == location) {
                 eventCollection.findAndModify({
                     _id: eventNow.id,
@@ -71,6 +75,7 @@ module.exports = function(args) {
                     new: true
                 }, function(err, event) {
                     if (!err && event != null) {
+                        //Send LiveLabs notification
                         console.log("User '" +user.name+ "' has been registered for '" +eventNow.name+ "'");
                         request.post('http://athena.smu.edu.sg/hestia/livelabs/index.php/broadcast/ping_others', {
                             form: {
@@ -90,36 +95,39 @@ module.exports = function(args) {
         });
     }
     
-    function regStudent(studentNow, location, classNow) {
-        request.post('http://athena.smu.edu.sg/hestia/livelabs/index.php/user_location/userlocation', {
-            form: {
-                email: studentNow.emailHash,
-                appid: "176110"
-            },
-            jar: true
-        }, function(error, res, data) {
-            try {
-                data = JSON.parse(data);
-            } catch(e) {
-                console.log("JSON parse error!");
-            }
-            console.log("Student location for " +studentNow.name+ ": " + data.section);
-            if (data.section == location) {
-                var attendance = "",
-                    tempStu = "";
-                classCollection.findOne({
-                    _id: classNow.id
-                }, function(err, cls) {
-                    if (!err) {
-                        cls.students.forEach(function(student) {
-                            if (student.uid == studentNow.uid) {
-                                attendance = student.attendance;
-                                tempStu = student;
-                            }
-                        });
-                        
-                        if (attendance.charAt(5) == 0) {
-                            attendance = attendance.replaceAt(5, '1');
+    function regStudent(studentNow, location, classNow, week) {
+        //First get the attendance of the student
+        var attendance = "",
+            tempStu = "";
+        classCollection.findOne({
+            _id: classNow.id
+        }, function(err, cls) {
+            if (!err) {
+                cls.students.forEach(function(student) {
+                    if (student.uid == studentNow.uid) {
+                        attendance = student.attendance;
+                        tempStu = student;
+                    }
+                });
+                
+                //Check location if student's attendance is not marked yet
+                if (attendance.charAt(week) == 0) {
+                    request.post('http://athena.smu.edu.sg/hestia/livelabs/index.php/user_location/userlocation', {
+                        form: {
+                            email: studentNow.emailHash,
+                            appid: "176110"
+                        },
+                        jar: true
+                    }, function(error, res, data) {
+                        try {
+                            data = JSON.parse(data);
+                        } catch(e) {
+                            console.log("JSON parse error!");
+                        }
+                        console.log("Checking " +studentNow.name+ "'s location: " + data.section);
+                        //Mark the attendance if student is at the class location
+                        if (data.section == location) {
+                            attendance = attendance.replaceAt(week, '1');
                             classCollection.findAndModify({
                                 _id: classNow.id,
                                 "students.uid": studentNow.uid
@@ -131,6 +139,7 @@ module.exports = function(args) {
                                 new: true
                             }, function(err, cls) {
                                 if (!err && cls != null) {
+                                    //Send LiveLabs notification
                                     request.post('http://athena.smu.edu.sg/hestia/livelabs/index.php/broadcast/ping_others', {
                                         form: {
                                             to: "{'to':[{'id':"+studentNow.uid+"}]}",
@@ -141,10 +150,11 @@ module.exports = function(args) {
                                         },
                                         jar: true
                                     }, function(error, res, data) {
-                                        console.log("Class attendance notification sent: " + data);
+                                        console.log(studentNow.name+ "'s attendance notification sent: " + data);
                                     });
+                                    //Send webapp notification
                                     if (args.sockets[cls.ta_id]) {
-                                        console.log("Sending signup notification to " + cls.ta_id);
+                                        console.log("Sending attendance notification to " + cls.ta_id);
                                         args.sockets[cls.ta_id].emit("register_notify", {
                                             student_name: tempStu.name,
                                             class_code: cls.class_code,
@@ -154,8 +164,8 @@ module.exports = function(args) {
                                 }
                             });
                         }
-                    }
-                });
+                    });
+                }
             }
         });
     }

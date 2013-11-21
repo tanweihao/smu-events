@@ -18,7 +18,7 @@ module.exports = function (args) {
                     uid: parseInt(req.body.uid),
                     email: req.body.email,
                     text: req.body.text,
-                    time: new Date(timeNow.format("YYYY-MM-DDTHH:mm"))
+                    time: new Date(timeNow.format("YYYY-MM-DDTHH:mm:ss"))
                 }
             }
         }, {
@@ -30,7 +30,8 @@ module.exports = function (args) {
                         to: "{'to':[{'id':"+item.uid+"}]}",
                         loc: "{'loc':[{'type':10}]}",
                         expiry: 336,
-                        content: '{"type":3, "id":"'+item._id+'", "name":"'+item.name+'", "location":"'+item.location+'", "description":"'+item.description+'"}',
+                        content: '{"type":3, "id":"'+item._id+'", "name":"'+item.name+'", "location":"'+item.location
+                                 +'", "description":"'+item.description+'"}',
                         appid: "176110"
                     },
                     jar: true

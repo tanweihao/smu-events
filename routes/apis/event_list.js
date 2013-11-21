@@ -12,7 +12,7 @@ module.exports = function (args) {
                 limit: 10
             },
             sortOption = {
-                start_date: -1
+                start_date: 1
             };
         
         (_get.page) ? (options.skip = _get.page * 10) : 0;

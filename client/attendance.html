@@ -248,6 +248,26 @@
 <script src="javascripts/documentation.js" type="text/javascript"></script>
 <script src="javascripts/prettify.js" type="text/javascript"></script>
 <link href="stylesheets/prettify.css" media="screen" rel="stylesheet" type="text/css" />
+<script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io.connect(window.location.hostname);
+        socket.on('connect', function(data) {
+            if(!readCookie("socketSession") || readCookie("socketSession") == null || readCookie("socketSession") == false || readCookie("socketSession") == undefined ){
+                createCookie("socketSession",true,3);
+            }
+            socket.emit('identify', { client_name: readCookie("taId") });
+        });
+        
+        socket.on('register_notify', function(data) {
+            Notifications.push({
+                text: "<i class='icon-success-sign'>"+data.student_name+" has registered up for the class "+data.class_code+" "+data.class_name+"</i> !",
+                autoDismiss: 10,
+                "class": "success"
+            });
+        });
+            
+            
+    </script>
 <script type="text/javascript">
     prettyPrint()
 </script>
@@ -291,7 +311,7 @@
       function populateStudentList(classId,week){
       	var sb = [];
       	
-      	var data = 'class_id="'+classId+'"&week='+week;
+      	var data = 'class_id='+classId+'&week='+week;
       	
       	$.ajax({
     		url: "http://smu-events.herokuapp.com/api/classes/class_list",
@@ -303,7 +323,7 @@
     			var locations = [];
 				$(json).each(function(i, obj) {
 					studentById[obj.uid] = obj;
-					locations.push([obj.uid,obj.name, (obj.attendance==1?"Yes":"No")]);
+					locations.push([obj.uid,obj.name, (obj.attendance==1?"Yes":"No"),obj.class_part]);
    					
 				});
     			console.log(locations);
@@ -317,7 +337,8 @@
         			"aoColumns": [
         				{ "sTitle": "ID" },
             			{ "sTitle": "Name" },
-           				{ "sTitle": "Attendance" }
+           				{ "sTitle": "Attendance" },
+           				{ "sTitle": "Class Participation" }
         			],"bJQueryUI": true,
       				"sPaginationType": "full_numbers",
       				"sDom": '<""l>t<"F"fp>'
@@ -343,11 +364,10 @@
 	  });
       
       $(".data-table tbody tr").live("click", function(event){
-    	var position = oTable.fnGetPosition(this); // getting the clicked row position
-    	var id = oTable.fnGetData(position)[0];    // getting the value of the first (invisible) column
-    	console.log(position+" "+id);
-    	editStudent(studentById[id]);
-    	
+    		var position = oTable.fnGetPosition(this); // getting the clicked row position
+    		var id = oTable.fnGetData(position)[0];    // getting the value of the first (invisible) column
+    		console.log(position+" "+id);
+    		editStudent(studentById[id]);
       });
       
       function editStudent(student){
@@ -359,7 +379,7 @@
       	
 		sb.push('<div class="span4"><div class="row">');
 		sb.push('<div class="span1"><a href="#" class="thumbnail" style="text-decoration:none;"><img src="images/avatar.png"></a></div>');
-    	sb.push('<div class="span3"><p>Student ID: '+student.uid+'</p><p><strong>Student Name: '+student.name+'</strong></p><p>Attendance: '+(student.attendance==1?"Yes":"No")+'</p><p>Class Part: <a id="minus" href="#" style="font-size:18px;margin-right:5px;margin-left:5px;"><i class="icon-minus"></i></a><span id="value" style="min-width:20px;min-height:20px;font-size:18px;">0</span><a id="plus" href="#" style="margin-left:5px;font-size:18px;"><i class="icon-plus"></i></a></p></div></div>');
+    	sb.push('<div class="span3"><p>Student ID: '+student.uid+'</p><p><strong>Student Name: '+student.name+'</strong></p><p>Attendance: '+(student.attendance==1?"Yes":"No")+'</p><p>Class Part: <a id="minus" href="#" style="font-size:18px;margin-right:5px;margin-left:5px;"><i class="icon-minus"></i></a><span id="value" style="min-width:20px;min-height:20px;font-size:18px;">'+student.class_part+'</span><a id="plus" href="#" style="margin-left:5px;font-size:18px;"><i class="icon-plus"></i></a></p></div></div>');
     	sb.push('</div></div>');
       	$(".modal-body").append(sb.join(''));
       	var valueElement = $('#value');
@@ -374,8 +394,46 @@
     	$('#minus').bind('click', {increment: -1}, incrementValue);
       	
       	$("#save").bind('click', function(e){
+      		var stu = student;
       		e.preventDefault();
-      		console.log(Math.max(parseInt($("#value").text())));
+      		console.log(stu);
+      		//update class part
+      		var studentData = '{"class_id":"'+$("#classList option:selected").attr('oid')+'","uid":'+stu.uid+',"week":'+$("#weekList option:selected").val()+',"class_part":'+Math.max(parseInt($("#value").text()))+'}';
+      		 $.ajax({
+    	    url: "http://smu-events.herokuapp.com/api/classes/update_c",
+		    type: "POST",
+    		contentType: "application/json",
+		    data: studentData,
+		    error:function(){
+		            Notifications.push({
+                        text: "<i class='icon-warning-sign'></i>Error : Cannot update class part for student ["+stu.name+"]. Please try again.",
+                        autoDismiss: 3,
+                        "class": "error"
+                    });
+		    },
+    	    success:function(json) {
+    	        console.log(json);
+    	        if(json.result==-1){
+    	            Notifications.push({
+                        text: "<i class='icon-warning-sign'></i>Error : Error updating class part for student ["+stu.name+"]. Please try again.",
+                        autoDismiss: 3,
+                        "class": "error"
+                    });
+    	        }else{
+    	            Notifications.push({
+                        text: "<i class='icon-success-sign'></i> Successfully updated class part for student ["+stu.name+"]!",
+                        autoDismiss: 3,
+                        "class": "success"
+                    });
+                    $("#save").unbind( "click" );
+                    $("#modal").modal('hide');
+                    populateStudentList($("#classList option:selected").attr('oid'),$("#weekList option:selected").val());
+                   //window.location.replace('fullcalendar.html');
+    	        }
+    	        
+    	    }
+        });
+      		//end
       	});
       	
       	$("#modal").modal('show');

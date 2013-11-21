@@ -6,7 +6,8 @@ module.exports = function (args) {
         var classCollection = db.collection('classes'),
             BSON = mongodb.BSONPure,
             week = parseInt(req.body.week),
-            attendance = "";
+            attendance = "",
+            tempStu = "";
         
         classCollection.findOne({
             _id: BSON.ObjectID(req.body.class_id)
@@ -15,6 +16,7 @@ module.exports = function (args) {
                 cls.students.forEach(function(student) {
                     if (student.uid == parseInt(req.body.uid)) {
                         attendance = student.attendance;
+                        tempStu = student;
                     }
                 });
                 
@@ -31,10 +33,12 @@ module.exports = function (args) {
                 }, function(err, cls) {
                     if (!err && cls != null) {
                         if (args.sockets[cls.ta_id]) {
+                            
                             console.log("Sending signup notification to " + cls.ta_id);
                             args.sockets[cls.ta_id].emit("register_notify", {
-                                user_name: req.body.name,
-                                event_name: event.event_name
+                                student_name: tempStu.name,
+                                class_code: cls.class_code,
+                                class_name: cls.class_name
                             });
                         }
                         

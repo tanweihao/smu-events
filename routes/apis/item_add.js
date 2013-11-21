@@ -21,7 +21,7 @@ module.exports = function(args) {
             if (!err) {
                 request.post('http://athena.smu.edu.sg/hestia/livelabs/index.php/broadcast/ping_others', {
                     form: {
-                        loc: "{'loc':[{'type':12, 'id':[{'floor':"+parseInt(req.body.loc_code)+"}]}]}",
+                        loc: "{'loc':[{'type':12, 'id':[{'floor':'+parseInt(req.body.loc_code)+'}]}]}",
                         expiry: 2,
                         content: '{"type":2, "id":"'+item._id+'", "name":"'+item.name+'", "location":"'+item.location
                                  +'", "description":"'+item.description+'", "uid":"'+item.uid+'"}',

@@ -261,7 +261,7 @@
       getClassList();
       var classById ={}; var studentById = {};var oTable;
       function getClassList(){
-      		var taId = 'taId='+readCookie("taId");
+      		var taId = 'ta_Id='+readCookie("taId");
       		
      	 $.ajax({
     		url: "http://smu-events.herokuapp.com/api/classes/class_list",
@@ -291,7 +291,7 @@
       function populateStudentList(classId,week){
       	var sb = [];
       	
-      	var data = 'taId='+readCookie("taId")+'&class_id='+classId+'&week='+week;
+      	var data = 'class_id='+classId+'&week='+week;
       	
       	$.ajax({
     		url: "http://smu-events.herokuapp.com/api/classes/class_list",

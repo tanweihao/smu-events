@@ -52,6 +52,10 @@ MongoClient.connect(connection_string, function (err, db) {
             classList: {}
         };
         
+        io.configure(function () { 
+            io.set("transports", ["xhr-polling"]); 
+            io.set("polling duration", 10); 
+        });
         io.sockets.on('connection', function (socket) {
             socket.on('identify', function(data) {
                 console.log("Socket client '" +data.client_name+ "' connected")

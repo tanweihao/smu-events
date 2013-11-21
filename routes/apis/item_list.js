@@ -13,10 +13,7 @@ module.exports = function (args) {
                 status: false
             },
             options = {
-                limit: 10,
-                $sort: {
-                    comments: 1
-                }
+                limit: 10
             };
         
         //Handling of optional parameters

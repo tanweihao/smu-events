@@ -26,6 +26,7 @@ module.exports = function (args) {
         }, function(err, event) {
             if (!err && event != null) {
                 if (args.sockets[event.org_id]) {
+                    console.log("Sending signup notification to " + event.org_id);
                     args.sockets[event.org_id].emit("signup_notify", {
                         user_name: req.body.name,
                         event_name: event.event_name

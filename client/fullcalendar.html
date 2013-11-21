@@ -226,9 +226,10 @@ body { padding-top:0px; }
 <link href="stylesheets/prettify.css" media="screen" rel="stylesheet" type="text/css" />
 <script src="/socket.io/socket.io.js"></script>
     <script>
-        var socket = io.connect('http://smu-events.herokuapp.com/');
+        var socket = io.connect(window.location.hostname);
         if(!readCookie("socketSession") || readCookie("socketSession") == null || readCookie("socketSession") == false || readCookie("socketSession") == undefined ){
             socket.on('connect', function(data) {
+                console.log(readCookie("orgId"))
                 socket.emit('identify', { client_name: readCookie("orgId") });
                 createCookie("socketSession",true,3);
             }); 

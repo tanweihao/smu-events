@@ -18,6 +18,8 @@ module.exports = function(args) {
             events.forEach(function(event) {
                 args.eventList[eventDateStr].push({
                     id: event.id,
+                    name: event.event_name,
+                    start_date: event.start_date,
                     location: 104020,
                     signups: event.signups
                 });
@@ -33,6 +35,8 @@ module.exports = function(args) {
             classes.forEach(function(cls) {
                 args.classList[classDateStr].push({
                     id: cls.id,
+                    name: cls.class_name,
+                    start_date: cls.start_date,
                     location: cls.loc_code,
                     students: cls.students
                 });

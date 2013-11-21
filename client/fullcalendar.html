@@ -228,10 +228,10 @@ body { padding-top:0px; }
     <script>
         var socket = io.connect(window.location.hostname);
             
-        socket.on(readCookie("orgId"), function(user_name,event_name) {
+        socket.on(readCookie("orgId"), function(data) {
               Notifications.push({
-                        text: "<i class='icon-success-sign'>"+user_name+" has signed up for "+event_name+"</i> !",
-                        autoDismiss: 3,
+                        text: "<i class='icon-success-sign'>"+data.user_name+" has signed up for "+data.event_name+"</i> !",
+                        autoDismiss: 10,
                         "class": "success"});
         });
             

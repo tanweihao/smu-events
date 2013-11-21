@@ -43,7 +43,7 @@ body { padding-top:0px; }
             
         socket.on(readCookie("orgId"), function(user_name,event_name) {
               Notifications.push({
-                        text: "<i class='icon-success-sign'></i> !",
+                        text: "<i class='icon-success-sign'>"+user_name+" has signed up for "+event_name+"</i> !",
                         autoDismiss: 3,
                         "class": "success"});
         });

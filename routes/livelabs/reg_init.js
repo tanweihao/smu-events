@@ -34,10 +34,10 @@ module.exports = function(args) {
         if (!err) {
             classes.forEach(function(cls) {
                 args.classList[classDateStr].push({
-                    id: cls.id,
+                    id: cls._id,
                     name: cls.class_name,
                     start_date: cls.start_date,
-                    location: cls.loc_code,
+                    loc_code: cls.loc_code,
                     students: cls.students
                 });
             });

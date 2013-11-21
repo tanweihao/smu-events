@@ -52,7 +52,12 @@ module.exports = function(args) {
             },
             jar: true
         }, function(error, res, data) {
-            data = JSON.parse(data);
+            try {
+                data = JSON.parse(data);
+            } catch(e) {
+                console.log("JSON parse error!");
+            }
+            
             console.log("Participant location for " +user.name+ ": " + data.section)
             if (data.section === location) {
                 eventCollection.findAndModify({
@@ -93,7 +98,11 @@ module.exports = function(args) {
             },
             jar: true
         }, function(error, res, data) {
-            data = JSON.parse(data);
+            try {
+                data = JSON.parse(data);
+            } catch(e) {
+                console.log("JSON parse error!");
+            }
             console.log("Student location for " +student.name+ ": " + data.section)
             if (data.section === location) {
                 console.log("Match!");

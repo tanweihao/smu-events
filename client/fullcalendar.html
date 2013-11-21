@@ -227,21 +227,13 @@ body { padding-top:0px; }
 <script src="/socket.io/socket.io.js"></script>
     <script>
         var socket = io.connect(window.location.hostname);
-        socket.on('connecting', function(data) {
-                console.log("Connecting to socket.io...");
+        socket.on('connect', function(data) {
+            if(!readCookie("socketSession") || readCookie("socketSession") == null || readCookie("socketSession") == false || readCookie("socketSession") == undefined ){
                 createCookie("socketSession",true,3);
-            });
-        if(!readCookie("socketSession") || readCookie("socketSession") == null || readCookie("socketSession") == false || readCookie("socketSession") == undefined ){
-            socket.on('connecting', function(data) {
-                console.log("Connecting to socket.io...");
-                createCookie("socketSession",true,3);
-            }); 
-            socket.on('connect', function(data) {
-                console.log(readCookie("orgId"))
-                socket.emit('identify', { client_name: readCookie("orgId") });
-                createCookie("socketSession",true,3);
-            }); 
-        }           
+            }
+            socket.emit('identify', { client_name: readCookie("orgId") });
+        });
+                 
         
         socket.on('signup_notify', function(data) {
             Notifications.push({

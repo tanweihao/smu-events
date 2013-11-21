@@ -37,6 +37,19 @@ body { padding-top:0px; }
 .widget .comment-text { font-size: 12px; }
 .widget .btn-block { border-top-left-radius:0px;border-top-right-radius:0px; }
   </style>
+   <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io.connect(window.location.hostname);
+            
+        socket.on(readCookie("orgId"), function(user_name,event_name) {
+              Notifications.push({
+                        text: "<i class='icon-success-sign'></i> !",
+                        autoDismiss: 3,
+                        "class": "success"});
+        });
+            
+            
+    </script>
 </head>
 <body>
 

@@ -14,7 +14,7 @@ module.exports = function(args) {
             description: req.body.description,
             location: req.body.location,
             loc_code: parseInt(req.body.loc_code),
-            date: timeNow.format("YYYY-MM-DDTHH:mm"),
+            date: timeNow.toDate(),
             status: false,
             comments: []
         }, function(err, item) {

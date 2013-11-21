@@ -25,8 +25,9 @@ module.exports = function (args) {
             new: true
         }, function(err, event) {
             if (!err && event != null) {
-                io.sockets.emit('signup_notify', {
-                    hello: 'world'
+                io.sockets.emit(event.org_id, {
+                    user_name: req.body.name,
+                    event_name: event.event_name
                 });
                 res.json({
                     status: "success"

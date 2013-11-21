@@ -36,12 +36,13 @@ module.exports = function(args) {
             
             if (classTime.isBefore(currentTime)) {
                 console.log("Class '" +cls.name+ "' has started");
+                console.log(currentTime.isoWeek(), classTime.isoWeek())
                 cls.students.forEach(function(student) {
                     regStudent(student, cls.loc_code, cls);
                 });
             }
         });
-    }, 10000);
+    }, 5000);
     
     function regUser(user, location, eventNow) {
         request.post('http://athena.smu.edu.sg/hestia/livelabs/index.php/user_location/userlocation', {

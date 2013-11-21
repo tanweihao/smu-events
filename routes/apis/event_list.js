@@ -10,6 +10,9 @@ module.exports = function (args) {
         var query = {},
             options = {
                 limit: 10
+            },
+            sortOption = {
+                start_date: -1
             };
         
         (_get.page) ? (options.skip = _get.page * 10) : 0;
@@ -24,6 +27,7 @@ module.exports = function (args) {
             query.start_date = {
                 $lte: new Date()
             };
+            sortOption.start_date = -1;
         }
         if (_get.future_events) {
             query.signups = {
@@ -36,7 +40,7 @@ module.exports = function (args) {
             };
         }
         
-        eventCollection.find(query, options).sort({start_date: 1}).toArray(function(err, events) {
+        eventCollection.find(query, options).sort(sortOption).toArray(function(err, events) {
             if (!err) {
                 //Run through events list and include attendance if UID is specified
                 var uid;

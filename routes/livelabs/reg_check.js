@@ -1,8 +1,12 @@
 module.exports = function(args) {
     var moment = args.moment,
-        request = args.request;
+        request = args.request,
+        mongodb = args.mongodb,
+        db = args.db;
     
-    var timeNow = moment().zone("+0800"),
+    var eventCollection = db.collection('events'),
+        BSON = mongodb.BSONPure,
+        timeNow = moment().zone("+0800"),
         eventDateStr = timeNow.format("DDMMYYYYHH"),
         classDateStr = timeNow.format("dddHH");
     
@@ -16,7 +20,7 @@ module.exports = function(args) {
                 console.log("Event '" +event.name+ "' has started. Location code: " +event.loc_code);
                 event.signups.forEach(function(user) {
                     if (!user.registered) {
-                        regUser(user, event.loc_code, event.event_name);
+                        regUser(user, event.loc_code, event);
                     }
                 });
             }
@@ -40,7 +44,7 @@ module.exports = function(args) {
         });
     }, 10000);
     
-    function regUser(user, location, eventName) {
+    function regUser(user, location, eventNow) {
         request.post('http://athena.smu.edu.sg/hestia/livelabs/index.php/user_location/userlocation', {
             form: {
                 email: user.emailHash,
@@ -48,22 +52,34 @@ module.exports = function(args) {
             },
             jar: true
         }, function(error, res, data) {
-            console.log(data)
             data = JSON.parse(data);
             console.log("Participant location for " +user.name+ ": " + data.section)
             if (data.section === location) {
-                console.log("Match!");
-                request.post('http://athena.smu.edu.sg/hestia/livelabs/index.php/broadcast/ping_others', {
-                    form: {
-                        to: "{'to':[{'id':"+user.uid+"}]}",
-                        loc: "{'loc':[{'type':10}]}",
-                        expiry: 336,
-                        content: '{"type":1, "event_name":"'+eventName+'"}',
-                        appid: "176110"
-                    },
-                    jar: true
-                }, function(error, res, data) {
-                    console.log("Event registered notification sent: " + data);
+                eventCollection.findAndModify({
+                    _id: eventNow.id,
+                    "signups.uid": parseInt(user.uid)
+                }, [], {
+                    $set: {
+                        "signups.$.registered": true
+                    }
+                }, {
+                    new: true
+                }, function(err, event) {
+                    if (!err && event != null) {
+                        console.log("User '" +user.name+ "' has been registered for '" +eventNow.name+ "'");
+                        request.post('http://athena.smu.edu.sg/hestia/livelabs/index.php/broadcast/ping_others', {
+                            form: {
+                                to: "{'to':[{'id':"+user.uid+"}]}",
+                                loc: "{'loc':[{'type':10}]}",
+                                expiry: 336,
+                                content: '{"type":1, "event_name":"'+eventNow.name+'"}',
+                                appid: "176110"
+                            },
+                            jar: true
+                        }, function(error, res, data) {
+                            console.log("Event registered notification sent: " + data);
+                        });
+                    }
                 });
             }
         });

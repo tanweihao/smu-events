@@ -15,7 +15,7 @@ module.exports = function (args) {
             options = {
                 limit: 10,
                 $sort: {
-                    comments: -1
+                    comments: 1
                 }
             };
         

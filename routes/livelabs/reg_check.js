@@ -48,6 +48,7 @@ module.exports = function(args) {
             },
             jar: true
         }, function(error, res, data) {
+            console.log(data)
             data = JSON.parse(data);
             console.log("Participant location for " +user.name+ ": " + data.section)
             if (data.section === location) {

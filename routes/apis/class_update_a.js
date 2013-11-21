@@ -30,6 +30,14 @@ module.exports = function (args) {
                     new: true
                 }, function(err, cls) {
                     if (!err && cls != null) {
+                        if (args.sockets[cls.ta_id]) {
+                            console.log("Sending signup notification to " + cls.ta_id);
+                            args.sockets[cls.ta_id].emit("register_notify", {
+                                user_name: req.body.name,
+                                event_name: event.event_name
+                            });
+                        }
+                        
                         res.json({
                             status: "success"
                         });

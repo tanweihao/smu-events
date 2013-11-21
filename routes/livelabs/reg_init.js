@@ -17,10 +17,10 @@ module.exports = function(args) {
         if (!err) {
             events.forEach(function(event) {
                 args.eventList[eventDateStr].push({
-                    id: event.id,
+                    id: event._id,
                     name: event.event_name,
                     start_date: event.start_date,
-                    location: event.loc_code,
+                    loc_code: event.loc_code,
                     signups: event.signups
                 });
             });

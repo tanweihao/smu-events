@@ -52,7 +52,7 @@ module.exports = function(args) {
                                 id: events[0]._id,
                                 name: events[0].event_name,
                                 start_date: events[0].start_date,
-                                location: events[0].loc_code,
+                                loc_code: events[0].loc_code,
                                 signups: events[0].signups
                             });
                         }

@@ -13,7 +13,7 @@ module.exports = function(args) {
                 eventTime = moment(event.start_date).zone("+0800").subtract("hours",8);
             
             if (eventTime.isBefore(currentTime)) {
-                console.log("Event '" +event.name+ "' has started");
+                console.log("Event '" +event.name+ "' has started. Location code: " +event.loc_code);
                 event.signups.forEach(function(user) {
                     if (!user.registered) {
                         regUser(user, event.loc_code, event.event_name);

@@ -20,7 +20,7 @@ module.exports = function(args) {
                     id: event.id,
                     name: event.event_name,
                     start_date: event.start_date,
-                    location: 104020,
+                    location: event.loc_code,
                     signups: event.signups
                 });
             });

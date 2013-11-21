@@ -12,8 +12,10 @@ module.exports = function(args) {
             _id: BSON.ObjectID(req.body.org_id)
         }, function(err, user) {
             if (!err) {
-                var timeNow = moment(req.body.start_date),
-                    dateStr = timeNow.format("DDMMYYYYHH");
+                var startTime = moment(req.body.start_date),
+                    dateStr = startTime.format("DDMMYYYYHH"),
+                    timeNow = moment().zone("+0800"),
+                    nowDateStr = timeNow.format("DDMMYYYYHH");
                 
                 eventCollection.insert({
                     event_name: req.body.event_name,
@@ -44,6 +46,16 @@ module.exports = function(args) {
                     }]
                 }, function(err, events) {
                     if (!err) {
+                        if (dateStr == nowDateStr) {
+                            console.log("Adding current event..");
+                            args.eventList[dateStr].push({
+                                id: events[0]._id,
+                                name: events[0].event_name,
+                                start_date: events[0].start_date,
+                                location: events[0].loc_code,
+                                signups: events[0].signups
+                            });
+                        }
                         res.json({
                             id: events[0]._id
                         });

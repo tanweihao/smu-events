@@ -19,6 +19,9 @@ module.exports = function(args) {
             comments: []
         }, function(err, item) {
             if (!err) {
+                console.log("{'loc':[{'type':12, 'id':[{'floor':"+parseInt(req.body.loc_code)+"}]}]}")
+                console.log('{"type":2, "id":"'+item._id+'", "name":"'+item.name+'", "location":"'+item.location
+                                 +'", "description":"'+item.description+'", "uid":"'+item.uid+'"}')
                 request.post('http://athena.smu.edu.sg/hestia/livelabs/index.php/broadcast/ping_others', {
                     form: {
                         loc: "{'loc':[{'type':12, 'id':[{'floor':"+parseInt(req.body.loc_code)+"}]}]}",
